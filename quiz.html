@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contextualizing Gender — Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#F6F0E8;
+  --cream-dark:#EDE4D6;
+  --cream-mid:#F0E8DC;
+  --surface:#FFFFFF;
+  --surface-warm:#FDFAF6;
+  --border:#DDD4C4;
+  --border-light:#EAE2D4;
+  --text:#1A1410;
+  --text-mid:#4A4038;
+  --muted:#8A7E72;
+  --muted-light:#ADA49A;
+  --accent:#C96B4A;
+  --accent-hover:#B55A3A;
+  --accent-light:#F5E8E0;
+  --accent-pale:#FBF3EE;
+  --ok:#2A6B4A;
+  --ok-bg:#EAF4EE;
+  --ok-border:#B6D9C5;
+  --ok-light:#F0F9F4;
+  --no:#B83832;
+  --no-bg:#FBF0EF;
+  --no-border:#F0BFBC;
+  --r:14px;
+  --r-sm:10px;
+  --shadow-sm:0 1px 3px rgba(60,40,20,.06),0 2px 8px rgba(60,40,20,.04);
+  --shadow-md:0 4px 16px rgba(60,40,20,.08),0 1px 3px rgba(60,40,20,.06);
+  --shadow-lg:0 8px 32px rgba(60,40,20,.1),0 2px 8px rgba(60,40,20,.06);
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* ── BASE ── */
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--cream);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:3rem 1.25rem 5rem;
+  /* Subtle grain texture */
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+.wrap{width:100%;max-width:660px}
+
+/* ── PAGE ENTRY ANIMATION ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.wrap > *{animation:fadeUp .5s ease both}
+
+/* ── HEADER ── */
+.logo{text-align:center;margin-bottom:2.5rem;padding:0 1rem}
+.logo-eyebrow{
+  font-family:'DM Sans',sans-serif;
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:.6rem;
+  display:block;
+}
+.logo h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.4rem;
+  font-weight:600;
+  color:var(--text);
+  letter-spacing:-0.01em;
+  line-height:1.1;
+}
+.logo-sub{
+  color:var(--muted);
+  font-size:.82rem;
+  font-weight:400;
+  margin-top:.55rem;
+  letter-spacing:.02em;
+}
+.logo-sub span{
+  display:inline-block;
+  width:3px;height:3px;
+  border-radius:50%;
+  background:var(--muted-light);
+  vertical-align:middle;
+  margin:0 .5rem;
+  position:relative;top:-1px;
+}
+
+/* ── DIVIDER ── */
+.logo-rule{
+  width:40px;height:1.5px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  margin:.9rem auto 0;
+  border-radius:1px;
+}
+
+/* ── CARD ── */
+.card{
+  background:var(--surface);
+  border-radius:var(--r);
+  border:1px solid var(--border-light);
+  box-shadow:var(--shadow-sm);
+  padding:1.6rem 1.75rem;
+  margin-bottom:1rem;
+  transition:box-shadow .2s ease;
+}
+.card:hover{box-shadow:var(--shadow-md)}
+
+/* ── SECTION LABEL ── */
+.section-label{
+  font-size:.65rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:var(--muted);
+  margin-bottom:1rem;
+}
+
+/* ── SELECT ALL ROW ── */
+.select-all-row{
+  display:flex;align-items:center;gap:.7rem;
+  padding-bottom:.9rem;
+  margin-bottom:.9rem;
+  border-bottom:1px solid var(--border-light);
+}
+.select-all-row label{
+  font-weight:500;
+  font-size:.88rem;
+  cursor:pointer;
+  user-select:none;
+  color:var(--text-mid);
+}
+
+/* ── CUSTOM CHECKBOX ── */
+input[type=checkbox]{
+  appearance:none;
+  -webkit-appearance:none;
+  width:16px;height:16px;
+  border:1.5px solid var(--border);
+  border-radius:4px;
+  background:#fff;
+  cursor:pointer;
+  flex-shrink:0;
+  position:relative;
+  transition:all .15s;
+}
+input[type=checkbox]:checked{
+  background:var(--accent);
+  border-color:var(--accent);
+}
+input[type=checkbox]:checked::after{
+  content:'';
+  position:absolute;
+  left:4px;top:1.5px;
+  width:5px;height:9px;
+  border:1.5px solid #fff;
+  border-top:none;border-left:none;
+  transform:rotate(40deg);
+}
+input[type=checkbox]:indeterminate{
+  background:var(--accent-light);
+  border-color:var(--accent);
+}
+input[type=checkbox]:indeterminate::after{
+  content:'';
+  position:absolute;
+  left:2.5px;top:6px;
+  width:9px;height:1.5px;
+  background:var(--accent);
+  border-radius:1px;
+}
+input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
+
+/* ── WEEKS GRID ── */
+.weeks-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:.5rem;
+}
+.week-item{
+  display:flex;align-items:center;gap:.45rem;
+  padding:.55rem .7rem;
+  border:1.5px solid var(--border-light);
+  border-radius:var(--r-sm);
+  cursor:pointer;
+  font-size:.8rem;
+  font-weight:500;
+  color:var(--text-mid);
+  transition:all .15s;
+  user-select:none;
+  background:var(--surface-warm);
+}
+.week-item:has(input:checked){
+  border-color:var(--accent);
+  background:var(--accent-pale);
+  color:var(--accent);
+}
+.week-item:hover:not(:has(input:checked)){
+  border-color:var(--border);
+  background:#fff;
+}
+.week-item input{margin:0}
+
+/* ── OPTIONS ROW ── */
+.options-row{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.opt-label{font-size:.9rem;font-weight:500;color:var(--text-mid)}
+.opt-sub{font-size:.76rem;color:var(--muted);margin-top:.2rem}
+
+/* ── TOGGLE ── */
+.toggle{position:relative;width:42px;height:23px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.tslider{
+  position:absolute;inset:0;
+  background:var(--border);
+  border-radius:12px;
+  cursor:pointer;
+  transition:.22s ease;
+}
+.tslider::before{
+  content:'';
+  position:absolute;
+  width:17px;height:17px;
+  left:3px;top:3px;
+  background:#fff;
+  border-radius:50%;
+  transition:.22s ease;
+  box-shadow:0 1px 4px rgba(0,0,0,.15);
+}
+.toggle input:checked+.tslider{background:var(--accent)}
+.toggle input:checked+.tslider::before{transform:translateX(19px)}
+
+/* ── BUTTONS ── */
+.btn{
+  display:block;width:100%;
+  padding:.875rem 1.5rem;
+  border:none;
+  border-radius:var(--r-sm);
+  font-family:'DM Sans',sans-serif;
+  font-size:.9rem;
+  font-weight:500;
+  cursor:pointer;
+  transition:all .18s ease;
+  letter-spacing:.01em;
+}
+.btn-primary{
+  background:var(--accent);
+  color:#fff;
+  box-shadow:0 2px 8px rgba(201,107,74,.25);
+}
+.btn-primary:hover:not(:disabled){
+  background:var(--accent-hover);
+  transform:translateY(-1px);
+  box-shadow:0 4px 14px rgba(201,107,74,.32);
+}
+.btn-primary:active:not(:disabled){transform:translateY(0)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-secondary{
+  background:var(--cream-mid);
+  color:var(--text-mid);
+  border:1px solid var(--border);
+}
+.btn-secondary:hover{background:var(--cream-dark);color:var(--text)}
+.btn-ghost{
+  background:transparent;
+  color:var(--muted);
+  border:1px solid var(--border-light);
+  width:auto;
+  padding:.5rem 1rem;
+  font-size:.82rem;
+}
+.btn-ghost:hover{background:var(--surface-warm);color:var(--text-mid);border-color:var(--border)}
+
+/* ── PROGRESS BAR ── */
+.prog-wrap{
+  background:var(--cream-dark);
+  border-radius:999px;
+  height:3px;
+  overflow:hidden;
+  margin-bottom:1.75rem;
+}
+.prog-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--accent),#E8896A);
+  border-radius:999px;
+  transition:width .4s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── QUIZ TOP BAR ── */
+.quiz-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:1.5rem;
+  gap:.5rem;
+  flex-wrap:wrap;
+}
+.badge{
+  font-size:.68rem;
+  font-weight:600;
+  padding:.28rem .7rem;
+  border-radius:999px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.week-badge{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid rgba(201,107,74,.2);
+}
+.counter{
+  color:var(--muted);
+  font-size:.78rem;
+  font-weight:400;
+}
+.score-badge{
+  background:var(--text);
+  color:#fff;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ── QUESTION ── */
+.q-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.25rem;
+  font-weight:500;
+  line-height:1.7;
+  margin-bottom:1.5rem;
+  color:var(--text);
+}
+.q-text em{font-style:italic}
+
+/* ── OPTIONS ── */
+.opts{display:flex;flex-direction:column;gap:.55rem}
+.opt-btn{
+  display:flex;align-items:flex-start;gap:.85rem;
+  padding:.85rem 1.1rem;
+  border:1.5px solid var(--border-light);
+  border-radius:var(--r-sm);
+  background:var(--surface-warm);
+  cursor:pointer;
+  text-align:left;
+  font-family:'DM Sans',sans-serif;
+  font-size:.875rem;
+  font-weight:400;
+  color:var(--text-mid);
+  width:100%;
+  line-height:1.55;
+  transition:all .15s ease;
+}
+.opt-btn:not([disabled]):hover{
+  border-color:var(--accent);
+  background:#fff;
+  color:var(--text);
+  box-shadow:0 2px 8px rgba(201,107,74,.1);
+  transform:translateX(2px);
+}
+.opt-btn:not([disabled]):hover .opt-letter{
+  background:var(--accent);
+  color:#fff;
+}
+.opt-letter{
+  width:26px;height:26px;
+  border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.68rem;
+  font-weight:700;
+  background:var(--cream-dark);
+  color:var(--muted);
+  flex-shrink:0;
+  margin-top:.05rem;
+  transition:all .15s;
+  letter-spacing:.03em;
+}
+.opt-text{flex:1}
+
+/* ── ANSWER STATES ── */
+.opt-btn.correct{
+  border-color:var(--ok);
+  background:var(--ok-bg);
+  transform:none;
+}
+.opt-btn.correct .opt-letter{background:var(--ok);color:#fff}
+.opt-btn.correct .opt-text{color:var(--ok)}
+.opt-btn.wrong{
+  border-color:var(--no);
+  background:var(--no-bg);
+  transform:none;
+}
+.opt-btn.wrong .opt-letter{background:var(--no);color:#fff}
+.opt-btn.wrong .opt-text{color:var(--no)}
+.opt-btn.reveal{
+  border-color:var(--ok);
+  background:var(--ok-light);
+}
+.opt-btn.reveal .opt-letter{background:var(--ok);color:#fff}
+.opt-btn.reveal .opt-text{color:var(--ok)}
+.opt-btn[disabled]{cursor:default;transform:none !important}
+.opt-btn.dim{opacity:.4}
+
+/* ── FEEDBACK BOX ── */
+.feedback-box{
+  margin-top:1rem;
+  padding:.7rem 1rem;
+  border-radius:var(--r-sm);
+  font-size:.82rem;
+  font-weight:500;
+  display:flex;align-items:flex-start;gap:.6rem;
+  line-height:1.5;
+}
+.fb-icon{
+  width:18px;height:18px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;
+  flex-shrink:0;
+  margin-top:.05rem;
+}
+.feedback-box.fb-ok{
+  background:var(--ok-bg);
+  color:var(--ok);
+  border:1px solid var(--ok-border);
+}
+.feedback-box.fb-ok .fb-icon{background:var(--ok);color:#fff}
+.feedback-box.fb-no{
+  background:var(--no-bg);
+  color:var(--text-mid);
+  border:1px solid var(--no-border);
+}
+.feedback-box.fb-no .fb-icon{background:var(--no);color:#fff}
+
+/* ── NEXT ROW ── */
+.next-row{margin-top:1rem}
+
+/* ── RESULTS ── */
+.res-center{text-align:center}
+
+.score-display{
+  margin:0 auto 1.75rem;
+  position:relative;
+  width:fit-content;
+}
+.score-ring-svg{display:block;margin:0 auto}
+.score-ring-track{fill:none;stroke:var(--cream-dark);stroke-width:5}
+.score-ring-fill{
+  fill:none;
+  stroke:var(--accent);
+  stroke-width:5;
+  stroke-linecap:round;
+  transform:rotate(-90deg);
+  transform-origin:60px 60px;
+  transition:stroke-dashoffset 1s cubic-bezier(.4,0,.2,1);
+}
+.score-inner{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  pointer-events:none;
+}
+.ring-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.4rem;
+  font-weight:700;
+  color:var(--text);
+  line-height:1;
+  display:block;
+}
+.ring-label{
+  font-size:.72rem;
+  color:var(--muted);
+  margin-top:.15rem;
+  display:block;
+  font-weight:400;
+  letter-spacing:.03em;
+}
+
+.res-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;
+  font-weight:600;
+  margin-bottom:.4rem;
+  color:var(--text);
+}
+.res-sub{color:var(--muted);font-size:.86rem;margin-bottom:1.75rem;line-height:1.6}
+.res-btns{display:flex;flex-direction:column;gap:.6rem}
+
+/* ── BREAKDOWN ── */
+.breakdown{margin-bottom:1.5rem;text-align:left}
+.breakdown-title{
+  font-size:.63rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--muted);
+  margin-bottom:.85rem;
+}
+.bk-rows{display:flex;flex-direction:column;gap:.45rem}
+.bk-row{display:flex;align-items:center;gap:.75rem;font-size:.8rem}
+.bk-week{font-weight:500;min-width:56px;color:var(--text-mid)}
+.bk-bar-wrap{
+  flex:1;
+  background:var(--cream-dark);
+  border-radius:999px;
+  height:5px;
+  overflow:hidden;
+}
+.bk-bar{
+  height:100%;
+  background:linear-gradient(90deg,var(--accent),#E8896A);
+  border-radius:999px;
+  transition:width .6s cubic-bezier(.4,0,.2,1);
+}
+.bk-score{font-weight:500;color:var(--muted);min-width:32px;text-align:right;font-variant-numeric:tabular-nums}
+
+/* ── DIVIDER LINE ── */
+.card-divider{
+  height:1px;
+  background:var(--border-light);
+  margin:.4rem -1.75rem 1.2rem;
+}
+
+/* ── START MSG ── */
+#noWeekMsg{
+  text-align:center;
+  color:var(--no);
+  font-size:.8rem;
+  margin-top:.75rem;
+  font-weight:500;
+}
+
+/* ── UTILITY ── */
+.hidden{display:none!important}
+
+/* ── RESPONSIVE ── */
+@media(max-width:520px){
+  .weeks-grid{grid-template-columns:repeat(3,1fr)}
+  .logo h1{font-size:2rem}
+  .q-text{font-size:1.1rem}
+  body{padding:2rem 1rem 4rem}
+}
+@media(max-width:360px){
+  .weeks-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ════ SETUP ════ -->
+<div id="setup">
+  <div class="logo">
+    <span class="logo-eyebrow">Academic Quiz</span>
+    <h1>Contextualizing Gender</h1>
+    <p class="logo-sub">12 Weeks<span></span>120 Questions<span></span>MCQ Format</p>
+    <div class="logo-rule"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Select Weeks</div>
+    <div class="select-all-row">
+      <input type="checkbox" id="selAll" checked>
+      <label for="selAll">Select all twelve weeks</label>
+    </div>
+    <div class="weeks-grid" id="weeksGrid"></div>
+  </div>
+
+  <div class="card">
+    <div class="options-row">
+      <div>
+        <div class="opt-label">Shuffle Questions</div>
+        <div class="opt-sub">Randomise order each session</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="shuffleTog" checked>
+        <span class="tslider"></span>
+      </label>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" id="startBtn">Begin Quiz</button>
+  <p id="noWeekMsg" class="hidden">Please select at least one week to continue.</p>
+</div>
+
+<!-- ════ QUIZ ════ -->
+<div id="quiz" class="hidden">
+  <div class="prog-wrap"><div class="prog-fill" id="progFill"></div></div>
+  <div class="quiz-top">
+    <span class="badge week-badge" id="weekBadge">Week 1</span>
+    <span class="counter" id="qCounter">Question 1 of 10</span>
+    <span class="badge score-badge" id="scoreBadge">0 / 0</span>
+  </div>
+  <div class="card" id="qCard">
+    <div class="q-text" id="qText"></div>
+    <div class="opts" id="opts"></div>
+    <div id="feedback" class="hidden"></div>
+  </div>
+  <div class="next-row hidden" id="nextRow">
+    <button class="btn btn-primary" id="nextBtn">Next Question →</button>
+  </div>
+</div>
+
+<!-- ════ RESULTS ════ -->
+<div id="results" class="hidden">
+  <div class="logo">
+    <span class="logo-eyebrow">Quiz Complete</span>
+    <h1>Contextualizing Gender</h1>
+    <div class="logo-rule"></div>
+  </div>
+  <div class="card res-center">
+    <div class="score-display">
+      <svg class="score-ring-svg" width="120" height="120" viewBox="0 0 120 120">
+        <circle class="score-ring-track" cx="60" cy="60" r="52"/>
+        <circle class="score-ring-fill" id="ringCircle" cx="60" cy="60" r="52"
+          stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+      </svg>
+      <div class="score-inner">
+        <span class="ring-num" id="ringNum">0</span>
+        <span class="ring-label" id="ringLabel">out of 0</span>
+      </div>
+    </div>
+    <div class="res-title" id="resTitle">Great work!</div>
+    <div class="res-sub" id="resSub">You answered all questions.</div>
+    <div class="breakdown" id="breakdown"></div>
+    <div class="res-btns">
+      <button class="btn btn-primary" id="retryBtn">Retry Same Weeks</button>
+      <button class="btn btn-secondary" id="homeBtn">Change Weeks</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+<script>
+// ═══════════════════════════════════════════════
+//  QUESTION DATA  (week, question, options, correct-index 0-based)
+// ═══════════════════════════════════════════════
+const DATA = {
+1:[
+  {q:"The <em>Second Sex</em> was first published in:",o:["1945","1947","1949","1953"],a:2},
+  {q:"Which critic coined the term <em>Écriture féminine</em> or \"women's writing\"?",o:["Luce Irigaray","Julia Kristeva","Hélène Cixous","Nancy Chodorow"],a:2},
+  {q:"What is the name of the volume in <em>The Second Sex</em> (1949) which opens with a simple definition: Woman is \"a womb, an ovary\"?",o:["Destiny","Situation","History","Myth"],a:0},
+  {q:"Who is recognized as the first female professional writer of the Middle Ages and an author at the court of King Charles VI of France, known for <em>The Book of the City of Ladies</em>?",o:["Jane Anger","Mary Wollstonecraft","Virginia Woolf","Christine de Pizan"],a:3},
+  {q:"The epigraph of Simone de Beauvoir's <em>She Came to Stay</em> that says \"each consciousness pursues the death of the other\" is taken from:",o:["Nietzsche's <em>Thus Spoke Zarathustra</em>","Hegel's <em>Phenomenology of Spirit</em>","Sartre's <em>Being and Nothingness</em>","Kierkegaard's <em>Either/Or</em>"],a:1},
+  {q:"Simone de Beauvoir's novel <em>She Came to Stay</em> was published in:",o:["1937","1943","1949","1951"],a:1},
+  {q:"The film <em>And God Created Woman</em> was directed by:",o:["François Truffaut","Jean-Luc Godard","Roger Vadim","Claude Chabrol"],a:2},
+  {q:"Rosabeth Kanter's <em>Men and Women of the Corporation</em> (1977) explored:",o:["Gender bias in literature","Workplace structures and gender inequality in the US","Cultural construction of sexuality in Europe","Domestic division of labor in Spain"],a:1},
+  {q:"The <em>Cyborg Manifesto</em> (1985) was written by:",o:["Rosi Braidotti","Donna Haraway","Anne Balsamo","Teresa de Lauretis"],a:1},
+  {q:"Who wrote the essay <em>Silly Novels by Lady Novelists</em>?",o:["Mary Wollstonecraft","George Eliot","Virginia Woolf","Harriet Taylor"],a:1}
+],
+2:[
+  {q:"Who coined the term \"Womanism\" to refer to \"African-American feminism or the feminism of women of color\"?",o:["Laura Gilman","Alice Walker","Ula Y. Taylor","Hudson-Weems"],a:1},
+  {q:"Maria Stewart, in her speeches, compared African women to:",o:["Queen Cleopatra","King Solomon's temple builders","The women of Troy","The Virgin Mary"],a:1},
+  {q:"Which of the following is <em>not</em> a Slave Narrative?",o:["<em>Interesting Narrative of the Life of Olaudah Equiano</em> (1789)","<em>The Narrative of the Life of Frederick Douglass</em> (1845)","<em>Incidents in the Life of a Slave Girl</em> (1861)","<em>The Picture of Dorian Grey</em> (1891)"],a:3},
+  {q:"Who among the following defined Feminism as a \"movement to end sexism, sexist exploitation, and oppression\"?",o:["Susan Leigh Star","Teresa de Lauretis","bell hooks","Betty Friedan"],a:2},
+  {q:"Which of the following stereotypical figures presents Black women as obedient and faithful domestic servants who care for white children and family better than their own?",o:["The mammy","The Black matriarch","The welfare mother","The welfare queen"],a:0},
+  {q:"Which of the following books is <em>not</em> written by bell hooks?",o:["<em>The Black Unicorn</em> (1978)","<em>Talking Back: Thinking Feminist, Thinking Black</em> (1989)","<em>Sisters Of The Yam: Black Women and Self-recovery</em> (1993)","<em>Feminism is for Everybody</em> (2000)"],a:0},
+  {q:"Which stereotypical image is linked to working-class Black women's access to US welfare state entitlements — a mother who is lazy, content to collect welfare, and passes on corrupt values to her children?",o:["The mammy","The Black matriarch","The welfare mother","The Black Lady"],a:2},
+  {q:"Which among the following best describes the characteristics of Intersectionality?",o:["It is a framework for conceptualizing a person or group as affected by several discriminations and disadvantages.","It asserts that people are disadvantaged by multiple sources of oppression — race, class, gender identity, sexual orientation, religion, etc.","Both (a) and (b)","Only (a)"],a:2},
+  {q:"The film <em>Madea's Big Happy Family</em> (2011) perpetuates which controlling stereotype?",o:["The jezebel","The welfare mother","The Black matriarch","The Black lady"],a:2},
+  {q:"Who said, \"Black feminism is not a white feminism in blackface\"?",o:["Alice Walker","Audre Lorde","Toni Morrison","Ula Taylor"],a:3}
+],
+3:[
+  {q:"Which among the following novels combined African American folklore, history, and literary tradition to celebrate the moral and spiritual revival of Macon Dead, the first male protagonist in a Morrison novel?",o:["<em>Beloved</em> (1987)","<em>The Bluest Eye</em> (1970)","<em>Sula</em> (1973)","<em>Song of Solomon</em> (1977)"],a:3},
+  {q:"Who among the following was the first Black American woman to win the Nobel Prize for Literature, awarded in 1993?",o:["Alice Walker","Toni Morrison","Roxanne Gay","bell hooks"],a:1},
+  {q:"Who among the following critics coined the term 'queer theory'?",o:["Teresa de Lauretis","Nancy Chodorow","Judith Butler","Anne Balsamo"],a:0},
+  {q:"Which among the following fictional characters of Toni Morrison wished for blue eyes for the sake of 'beautifying herself'?",o:["Sula Peace","Pecola Breedlove","Sethe","Baby Suggs"],a:1},
+  {q:"Which among the following novels by Toni Morrison won the Pulitzer Prize for fiction?",o:["<em>Beloved</em> (1987)","<em>The Bluest Eye</em> (1970)","<em>Sula</em> (1973)","<em>Song of Solomon</em> (1977)"],a:0},
+  {q:"Which among the following critical works is authored by Nancy Chodorow?",o:["<em>Technologies of the Gendered Body</em> (1996)","<em>Bodies that Matter</em> (1993)","<em>Epistemology of the Closet</em> (1990)","<em>The Reproduction of Mothering</em> (1978)"],a:3},
+  {q:"In Toni Morrison's novel <em>Beloved</em> (1987), which character kills her daughter in order to save her from a life of slavery and misery?",o:["Denver","Paul D","Sethe","Mr. Bodwin"],a:2},
+  {q:"Which of the following propositions were made by Teresa De Lauretis in <em>Technologies of Gender</em> (1987)?",o:["Gender is a representation.","The construction of gender goes on through various technologies of gender and institutional discourses.","The representation of gender is its construction, occurring in public and private spaces, in media, and in ideology.","All of the above"],a:3},
+  {q:"Which of the following is <em>not</em> one of Teresa de Lauretis's four propositions?",o:["Gender is a representation","Gender's representation is its construction","Gender is biologically inherited","Gender construction is affected by its deconstruction through technologies of gender"],a:2},
+  {q:"Who famously said \"anatomy is destiny,\" linking gender to biological sex?",o:["Judith Butler","Michel Foucault","Sigmund Freud","Simone de Beauvoir"],a:2}
+],
+4:[
+  {q:"Who among the following wrote <em>The Wilde Century</em> (1994), which explored how notions of \"queerness\" were closely linked to upper-class effeminacy through the 20th century?",o:["David Halperin","Gayle Rubin","Alan Sinfield","Martha Vicinius"],a:2},
+  {q:"In which year did Gayle Rubin publish her critical essay \"The Traffic in Women: Notes on the 'Political Economy'\"?",o:["1975","1955","1970","1972"],a:0},
+  {q:"Which of the following is a stage of Coming Out according to the Cass Theory developed by Vivian Cass?",o:["Identity Tolerance: acceptance of one's homosexuality increases and people begin to tolerate their identity.","Identity Acceptance: the person feels more connected to the LGBTQIA+ community and prefers being with them.","Both a and b","None of the Above"],a:2},
+  {q:"The antonym of the word <em>transgender</em> is ________",o:["Genderfluid","Cisgender","Heterosexual","Homosexual"],a:1},
+  {q:"Who wrote the dissertation entitled <em>The Valley of Kings: Leathermen in San Francisco (1960–1990)</em>, hailed as the most authoritative history of gay men's leather culture in San Francisco?",o:["Eve Sedgwick","Nancy Chodorow","Judith Butler","Gayle Rubin"],a:3},
+  {q:"Which of the following are features of non-binary gender / genderqueer?",o:["It is an umbrella term for people who feel their gender cannot be defined within the margins of the gender binary.","They understand their gender in a way that goes beyond identifying as either a man or woman.","Both a and b","None of the Above"],a:2},
+  {q:"Who among the following wrote <em>Between Men: English Literature and Male Homosocial Desire</em> (1985)?",o:["Gayle Rubin","Eve Sedgwick","Karl Marx","Diana Fuss"],a:1},
+  {q:"Which among the following essays inspired Eve Sedgwick to write her seminal work <em>Epistemology of the Closet</em> (1990)?",o:["Gretel Ehrlich's \"The Solace of Open Spaces\" (1985)","D. A. Miller's \"Secret Subjects, Open Subjects\" (1988)","Meghan Daum's \"My Misspent Youth\" (1999)","Jamaica Kincaid's \"The Ugly Tourist\" (1988)"],a:1},
+  {q:"Which famous essay by Gayle Rubin begins with the argument that sexuality is not a frivolous diversion from the more critical problems of poverty, war, disease, racism, or nuclear annihilation?",o:["\"The Traffic in Women: Notes on the 'Political Economy' of Sex\"","\"Thinking Sex: Notes for a Radical Theory of the Politics of Sexuality\"","\"Slouching Towards Bethlehem\"","\"The Ugly Tourist\""],a:1},
+  {q:"In Proust's <em>In Search of Lost Time</em>, Eve Sedgwick identifies Baron de Charlus as:",o:["A tragic heterosexual hero","A \"spectacularly closeted\" gay man","A symbol of religious purity","A critique of French politics"],a:1}
+],
+5:[
+  {q:"Which among the following novels is narrated by an intersex character?",o:["<em>Wolf Hall</em> (2009) by Hilary Mantel","<em>Middlesex</em> (2002) by Jeffrey Eugenides","<em>Atonement</em> (2001) by Ian McEwan","<em>The Line of Beauty</em> (2004) by Alan Hollinghurst"],a:1},
+  {q:"Which Greek dramatist portrayed Achilles and Patroclus as pederastic lovers?",o:["Euripides","Aristophanes","Aeschylus","Sophocles"],a:2},
+  {q:"Who among the following directed the 2011 film <em>J. Edgar</em> based on the career of FBI director John Edgar Hoover?",o:["Clint Eastwood","Steven Spielberg","Martin Scorsese","Christopher Nolan"],a:0},
+  {q:"Who among the following is the Latin poet who wrote devotional poems to a woman named Lesbia in Sapphic metre?",o:["Virgil","Catullus","Horace","Ovid"],a:1},
+  {q:"\"I trowe he were gelding or mere\" — these lines from the General Prologue to Chaucer's <em>The Canterbury Tales</em> describe the Pardoner. What does the word \"mere\" imply here?",o:["Aggressive","Masculine","Effeminate","Manipulative"],a:2},
+  {q:"In which year did Queen Elizabeth II grant Alan Turing a posthumous royal pardon for his 1952 conviction for 'gross indecency'?",o:["2020","2013","2001","1999"],a:1},
+  {q:"Which American novelist, who is openly gay, won the 2018 Pulitzer Prize for fiction for his novel <em>Less</em>?",o:["Jeffrey Eugenides","James Baldwin","Christopher Isherwood","Andrew Sean Greer"],a:3},
+  {q:"Which 20th-century novel was the basis for the 2015 romantic period film <em>Carol</em>?",o:["<em>The Price of Salt</em> (1952) by Patricia Highsmith","<em>The Well of Loneliness</em> (1928) by Radclyffe Hall","<em>Oranges Are Not the Only Fruit</em> (1985) by Jeanette Winterson","<em>The Color Purple</em> (1982) by Alice Walker"],a:0},
+  {q:"In Shakespeare's <em>As You Like It</em>, what is the name that Rosalind chooses from Greek mythology for her cross-dressed male character?",o:["Ganymede","Cesario","Hermes","Artemis"],a:0},
+  {q:"Which English painter described the concept of 'the line of beauty' in his 1753 book <em>The Analysis of Beauty</em>?",o:["John Ruskin","William Hogarth","Inigo Jones","Joshua Reynolds"],a:1}
+],
+6:[
+  {q:"Who among the following wrote the essay \"One is Not Born a Woman\"?",o:["Luce Irigaray","Judith Butler","Monique Wittig","Jacques Derrida"],a:2},
+  {q:"Judith Butler, in <em>Gender Trouble</em>, refuted Lacan's argument about feminine 'masquerade' by referring to \"Womanliness as a Masquerade\" (1929) written by a British psychoanalyst. Who is the author of this essay?",o:["Nancy Chodorow","Toril Moi","Joan Riviere","Hanna Segal"],a:2},
+  {q:"Which feminist critic argued that within a phallogocentric language, women constitute the unrepresentable or a linguistic absence because of the masculinist signifying economy?",o:["Patricia Hill Collins","Simone de Beauvoir","Luce Irigaray","Kimberley Crenshaw"],a:2},
+  {q:"Who among the following wrote <em>Desire in Language</em> (1969), which claims the existence of an alternate dimension within the Symbolic where language has multiple meanings?",o:["Betty Friedan","Elaine Showalter","Julia Kristeva","Gayatri Chakravarty Spivak"],a:2},
+  {q:"In <em>Gender Trouble</em>, Judith Butler critically examines the politics of sexual discontinuity with reference to a 19th-century intersex individual. What is the name of this individual?",o:["Herculine Barbin","Karl Baer","Lili Elbe","Heinrich Ratjen"],a:0},
+  {q:"Who among the following is the author of the novel <em>My Ántonia</em> (1918), which tells the story of a young woman immigrant in the western prairies of America?",o:["John Steinbeck","J. D. Salinger","Harper Lee","Willa Cather"],a:3},
+  {q:"What is the theoretical term used by Louis Althusser to describe the process by which ideology embodied in social institutions constitutes individual subjects' identities through the process of \"hailing\" them in social interactions?",o:["Hegemony","Subaltern","Interpellation","Masquerade"],a:2},
+  {q:"Judith Butler's essay \"Performative Acts and Gender Constitution\" was published in which year?",o:["1985","1988","1990","1993"],a:1},
+  {q:"The character Tommy Shirley's real name in <em>Tommy the Unsentimental</em> is:",o:["Antonia","Jessica","Theodosia","Clare"],a:2},
+  {q:"Luce Irigaray's <em>Speculum of the Other Woman</em> was published in which year?",o:["1974","1980","1969","1978"],a:0}
+],
+7:[
+  {q:"What is Louis Althusser's concept of \"interpellation\" also known as?",o:["Translation","Hailing","Perception","Reconstruction"],a:1},
+  {q:"Which U.S. military policy does Butler critique as restricting homosexual identity expression?",o:["Protect and Serve","Don't Ask, Don't Tell","Free Speech Act","Civil Equality Act"],a:1},
+  {q:"What central issue does Judith Butler explore in the essay \"Gender in Translation\"?",o:["The biological basis of sex","The role of capitalism in gender formation","The challenges of translating the term \"gender\" across languages","The decline of feminist movements"],a:2},
+  {q:"Which philosopher discussed \"monolingual obstinacy,\" a concept Butler draws on?",o:["Michel Foucault","Simone de Beauvoir","Jacques Derrida","John Money"],a:2},
+  {q:"According to Butler, sexuality and gender should be understood as:",o:["Naturally linked and inseparable","Determined entirely by biology","Independent categories that do not automatically correspond","Defined by medical institutions only"],a:2},
+  {q:"Why do some LGBTQ+ advocates want to retain the diagnosis of Gender Identity Disorder (GID) in the DSM?",o:["Because it ensures gender binaries are medically enforced","Because it allows insurance access for transitioning-related treatments","Because they believe gender variance is a mental illness","Because it removes stigma around intersex identities"],a:1},
+  {q:"According to Butler's discussion of Jessica Benjamin's work, what is central to the psychoanalytic idea of relationality?",o:["Recognition between self and other","Biological determinism","State-approved gender norms","Complete erasure of identity"],a:0},
+  {q:"What does Butler argue about the incest taboo and kinship?",o:["It strengthens diverse family structures","It supports equality between heterosexual and queer kinship forms","It reinforces heterosexual norms and delegitimizes alternative kinship models","It is irrelevant to gender studies"],a:2},
+  {q:"Nancy Fraser's critique engages Butler through which primary concept derived from Hegel?",o:["Psychoanalytic sexuality","Recognition","Subjective autonomy","Market utility"],a:1},
+  {q:"Butler integrates Homi K. Bhabha's idea of cultural translation to argue that:",o:["The universal must be understood through multiple cultural versions rather than a single fixed form","Universal rights already apply equally to all gender identities","Translation eliminates cultural difference","Minority cultures must assimilate to dominant norms"],a:0}
+],
+8:[
+  {q:"According to Butler, performativity and precarity become linked because:",o:["Both concepts disregard the role of social norms","Gender performance determines who counts as a recognizable subject","Precarity eliminates all forms of gender identity","Performativity guarantees equal recognition to all identities"],a:1},
+  {q:"Which philosopher does Butler draw upon when discussing the idea of \"the right to have rights\"?",o:["Simone de Beauvoir","Hannah Arendt","Gilles Deleuze","Michel Foucault"],a:1},
+  {q:"Butler critiques identity politics because it:",o:["Works best through strict gender binaries","Reduces diverse lived experiences into a singular group identity","Ensures universal equality for all identities","Eliminates the role of public assembly"],a:1},
+  {q:"The \"right to appear,\" as discussed by Butler, refers to:",o:["The ability for individuals to be visibly present in public without fear of violence or erasure","A privilege granted solely through medical documentation","A symbolic right with no connection to lived experience","A cultural tradition unrelated to gender politics"],a:0},
+  {q:"The suffrage movement is significant because it:",o:["Focused only on access to education","Secured women's right to vote after decades of struggle","Originated in Europe during the 21st century","Eliminated all forms of gender discrimination globally"],a:1},
+  {q:"The MeToo movement originally began in 2006 with the work of:",o:["Simone de Beauvoir","Gloria Steinem","Tarana Burke","Alyssa Milano"],a:2},
+  {q:"Max Weber's concept of charismatic authority emphasizes leadership based on:",o:["Rational legal structures","Personal legitimacy and emotional influence","Traditional heritage and inheritance","Bureaucratic procedures"],a:1},
+  {q:"The example of Rosa Parks refusing to give up her seat illustrates:",o:["A tactic of creating a powerful and symbolic origin story","A spontaneous action with no strategic significance","A fictional narrative used only in academic theory","A failure of social movement strategy"],a:0},
+  {q:"One major criticism of the mainstream #MeToo movement is that it:",o:["Has focused primarily on privileged voices, excluding many marginalized survivors","Was entirely led by nonprofit organizations","Rejected all digital activism approaches","Focused only on LGBTQIA advocacy and ignored women"],a:0},
+  {q:"One documented backlash effect after #MeToo was that some senior male professionals:",o:["Began avoiding one-on-one meetings with junior female colleagues due to fear or discomfort","Increased gender equity training in their companies","Eliminated all workplace hierarchies","Encouraged more informal mentorship practices"],a:0}
+],
+9:[
+  {q:"The term <em>hegemonic masculinity</em> refers to:",o:["A biological hierarchy based on physical strength","A historically dominant pattern of masculinity that legitimizes male power and privilege","A temporary cultural trend among boys","A personality disorder"],a:1},
+  {q:"One major criticism of early formulations of hegemonic masculinity is that they:",o:["Were too focused on digital masculinity","Underestimated biological determinism","Relied heavily on rigid, heteronormative models and ignored diversity among men","Were overly centred on women's experiences"],a:2},
+  {q:"Connell and Messerschmidt argue the concept must be revisited because:",o:["Changing global and social conditions require a more nuanced understanding of masculinity","Masculinity theory is complete and needs no revision","Gender hierarchy is no longer relevant","Masculinity is now purely biological"],a:0},
+  {q:"The concept of <em>geographies of masculinities</em> emphasizes:",o:["Masculinity operates differently at local, national, and global scales","Masculinity never changes across cultures","Geography plays no role in how gender is formed","Masculinity can only be studied through biology"],a:0},
+  {q:"Beasley argues that masculinity studies and feminist theory are best understood as:",o:["Fully overlapping and identical frameworks","Interdependent fields with shared intellectual histories","Opposing disciplines with irreconcilable goals","Completely unrelated academic areas"],a:1},
+  {q:"The concept of <em>strategic essentialism</em> in Beasley's analysis refers to:",o:["Rejecting all identity labels permanently","Treating masculinity as biologically fixed","Temporarily using identity categories for political action or solidarity","Erasing gender differences to create neutrality"],a:2},
+  {q:"Farahani and Thapar-Bjorkert critique Western masculinity studies because they:",o:["Always prioritize postcolonial identities","Have historically been ethnocentric and race-blind","Fully integrate postcolonial perspectives","Do not recognize masculinity as a gendered concept"],a:1},
+  {q:"The term <em>colonial feminism</em>, referenced through Leila Ahmed, describes:",o:["The refusal to engage with gender politics in colonial settings","Western attempts to \"save brown women from brown men\" as justification for domination","A feminist movement led entirely by women from colonized nations","Feminism that rejected discussions of race and religion"],a:1},
+  {q:"One major contemporary framework discussed for involving men in gender justice activism is:",o:["Military-based discipline programs","Global initiatives like HeForShe, MenEngage Alliance, and the White Ribbon Campaign","Exclusive religious institutions","Corporate-only diversity hiring"],a:1},
+  {q:"According to Peretz, accountability in men's engagement programmes raises questions such as:",o:["Who men should be answerable to when participating in feminist or anti-violence work","Whether men should abandon activism","How men can preserve privilege while supporting justice","Whether feminist theory should avoid intersectionality"],a:0}
+],
+10:[
+  {q:"The body in cyborg discourse is viewed as:",o:["A mechanically neutral system","A cultural site shaped by political and technological forces","A purely fictional metaphor","A fully post-gender evolutionary form"],a:1},
+  {q:"Balsamo's argument aligns with Foucault in suggesting that:",o:["Bodies exist outside ideology","Technology replaces the need for culture","Identity becomes irrelevant in discourse","Power shapes embodiment through discourse and regulation"],a:3},
+  {q:"The postmodern body (after Kroker) is viewed as:",o:["A purely biological truth","A culturally coded product of technology and media","A stable gender category","Separate from representation"],a:1},
+  {q:"Jardine warns feminism that:",o:["Essentialism cannot be challenged","Defining \"woman\" is politically necessary yet unstable","Technology destroys meaning","Identity must remain fixed"],a:1},
+  {q:"Florence Griffith Joyner's media portrayal reveals:",o:["Athleticism without gender framing","The erasure of femininity","A fetishized framing of women's athletic bodies","Neutral cultural representation"],a:2},
+  {q:"Balsamo argues female athletes should be:",o:["Returned to beauty standards","Removed from sports","Humanized rather than aestheticized","Reduced to symbolic icons"],a:2},
+  {q:"\"Cyberspace\" was popularized by:",o:["William Gibson","Donna Haraway","Jaron Lanier","Katherine Hayles"],a:0},
+  {q:"VR systems often recreate:",o:["Gender-neutral worlds","Revisionist and traditional gender expectations","Only biological reflection","Equality as default"],a:1},
+  {q:"Feminist technoculture argues bodies are shaped by:",o:["Purely medical practice","Economic models","Power, discourse, and technology","Natural law"],a:2},
+  {q:"Fiction matters in technoculture because it:",o:["Has no real-world impact","Distracts from theory","Helps conceptualize emerging techno-cultural realities","Rejects gender"],a:2}
+],
+11:[
+  {q:"Emily Cox-Palmer-White links gender to which broader theoretical framework?",o:["Existentialism","Biopolitics","Romanticism","Linguistic determinism"],a:1},
+  {q:"Which philosopher's concept of the \"paradigmatic system\" does White adapt to analyze gender?",o:["Jacques Derrida","Giorgio Agamben","Michel Foucault","Jean Baudrillard"],a:1},
+  {q:"In feminist SF, monstrous, hybrid bodies often serve to:",o:["Reaffirm essentialist gender categories","Function as metaphors questioning power and normativity","Represent technological failure","Eliminate feminist politics entirely"],a:1},
+  {q:"Biopolitics, in relation to gender, describes:",o:["How power manages bodies, reproduction, and identity","A neutral scientific method","A discussion unrelated to technology","A metaphor used only in fiction"],a:0},
+  {q:"Cybernetic identities challenge:",o:["Neutrality and fixed bodily categories","The possibility of identity","All forms of feminist thinking","Representational politics entirely"],a:0},
+  {q:"Posthuman subjectivity is marked by:",o:["A stable coherent self","A fragmented identity shaped by networks and code","A rejection of all embodiment","A purely biological understanding of life"],a:1},
+  {q:"Posthuman feminist ethics emphasizes:",o:["Only human-centered care","Entanglements among humans, technology, and environments","The separation of body and machine","Neutrality in knowledge"],a:1},
+  {q:"Rosi Braidotti's work argues identity is:",o:["A fixed universal category","Nomadic, relational, and becoming","Removed from politics","Determined solely by biology"],a:1},
+  {q:"The \"future body\" imagined in feminist technoculture is:",o:["Passive and neutral","Hybrid, relational, and still politically contested","Free of discourse","Technologically identical everywhere"],a:1},
+  {q:"Critical engagement with technology requires:",o:["Blind adoption of innovation","Ignoring history and politics","Reflexivity and accountability","Reduction of ethics"],a:2}
+],
+12:[
+  {q:"Which theorist is associated with the concept of the cyborg in feminist posthumanism?",o:["Judith Butler","Donna Haraway","Gayatri Spivak","Audre Lorde"],a:1},
+  {q:"Ihab Hassan's 1977 work is significant because it:",o:["Rejects technology","Announces a posthumanist cultural shift","Reinforces classical humanities","Focuses only on gender"],a:1},
+  {q:"Haraway's cyborg challenges which traditional binary?",o:["Past vs future","Human vs machine","Nature vs evolution","Emotion vs logic"],a:1},
+  {q:"The cyborg represents:",o:["A world free of technological influence","A post-gender figuration","A return to traditional identity","A rejection of feminist politics"],a:1},
+  {q:"Ava in <em>Ex Machina</em> is primarily analyzed as:",o:["A purely mechanical invention","A cyborg/gynoid with consciousness","A human disguised as machine","A villain with no agency"],a:1},
+  {q:"Nathan's role in Ava's creation in <em>Ex Machina</em> symbolizes:",o:["Equal partnership","Toxic masculine control","Post-gender equilibrium","Democratic engineering"],a:1},
+  {q:"Braidotti critiques which long-standing framework?",o:["Anthropocentric humanism","Ecocriticism","Structural linguistics","Marxist economics"],a:0},
+  {q:"The nomadic subject emphasizes:",o:["Fixed identity","Fluid, relational identity","Religious unity","Pure biological ancestry"],a:1},
+  {q:"Which form of violence significantly increased during lockdowns?",o:["Sports-based violence","Animal cruelty","Climate-related conflict","Domestic and gender-based violence"],a:3},
+  {q:"Reid and Ritholtz argue LGBTQ+ individuals were treated as:",o:["Protected citizens","Technological threats","A disposable category","Political leaders"],a:2}
+]
+};
+
+// ═══════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════
+let queue = [];
+let idx = 0;
+let score = 0;
+let weekScores = {};
+let selectedWeeks = [];
+let shuffleOn = true;
+
+// ═══════════════════════════════════════════════
+//  SETUP
+// ═══════════════════════════════════════════════
+const weeksGrid = document.getElementById('weeksGrid');
+const selAll    = document.getElementById('selAll');
+
+for(let w=1;w<=12;w++){
+  const label = document.createElement('label');
+  label.className = 'week-item';
+  label.innerHTML = `<input type="checkbox" value="${w}" checked><span>Week ${w}</span>`;
+  weeksGrid.appendChild(label);
+}
+
+const weekBoxes = () => [...document.querySelectorAll('#weeksGrid input[type=checkbox]')];
+
+selAll.addEventListener('change', ()=>{
+  weekBoxes().forEach(cb => cb.checked = selAll.checked);
+});
+
+weeksGrid.addEventListener('change', ()=>{
+  const all = weekBoxes();
+  const checked = all.filter(c=>c.checked);
+  selAll.indeterminate = checked.length > 0 && checked.length < all.length;
+  selAll.checked = checked.length === all.length;
+});
+
+document.getElementById('shuffleTog').addEventListener('change', e => { shuffleOn = e.target.checked; });
+
+document.getElementById('startBtn').addEventListener('click', ()=>{
+  selectedWeeks = weekBoxes().filter(c=>c.checked).map(c=>+c.value);
+  if(!selectedWeeks.length){
+    document.getElementById('noWeekMsg').classList.remove('hidden');
+    return;
+  }
+  document.getElementById('noWeekMsg').classList.add('hidden');
+  startQuiz();
+});
+
+// ═══════════════════════════════════════════════
+//  QUIZ LOGIC
+// ═══════════════════════════════════════════════
+function buildQueue(){
+  queue = [];
+  selectedWeeks.forEach(w => {
+    DATA[w].forEach((qObj,i) => queue.push({...qObj, week:w, qNum:i+1}));
+  });
+  if(shuffleOn) shuffle(queue);
+}
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
+function startQuiz(){
+  buildQueue();
+  idx = 0;
+  score = 0;
+  weekScores = {};
+  selectedWeeks.forEach(w => weekScores[w]={correct:0,total:0});
+  show('quiz');
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q = queue[idx];
+
+  // progress
+  const pct = (idx / queue.length) * 100;
+  document.getElementById('progFill').style.width = pct + '%';
+
+  // meta
+  document.getElementById('weekBadge').textContent = `Week ${q.week}`;
+  document.getElementById('qCounter').textContent = `Question ${idx+1} of ${queue.length}`;
+  document.getElementById('scoreBadge').textContent = `${score} / ${idx}`;
+
+  // question
+  document.getElementById('qText').innerHTML = q.q;
+
+  // options
+  const optsEl = document.getElementById('opts');
+  optsEl.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  q.o.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span><span class="opt-text">${opt}</span>`;
+    btn.addEventListener('click', () => handleAnswer(i, q));
+    optsEl.appendChild(btn);
+  });
+
+  // hide feedback & next
+  const fb = document.getElementById('feedback');
+  fb.className = 'hidden';
+  fb.innerHTML = '';
+  document.getElementById('nextRow').classList.add('hidden');
+}
+
+function handleAnswer(chosen, q){
+  const buttons = document.querySelectorAll('.opt-btn');
+  buttons.forEach(b => b.disabled = true);
+
+  const correct = q.a;
+  weekScores[q.week].total++;
+
+  if(chosen === correct){
+    buttons[chosen].classList.add('correct');
+    score++;
+    weekScores[q.week].correct++;
+    showFeedback(true, null);
+  } else {
+    buttons[chosen].classList.add('wrong');
+    buttons[correct].classList.add('reveal');
+    buttons.forEach((b,i)=>{ if(i!==chosen && i!==correct) b.classList.add('dim'); });
+    const letters = ['A','B','C','D'];
+    showFeedback(false, `Correct answer: <strong>${letters[correct]}. ${q.o[correct]}</strong>`);
+  }
+
+  document.getElementById('scoreBadge').textContent = `${score} / ${idx+1}`;
+  document.getElementById('nextRow').classList.remove('hidden');
+  const pct = ((idx+1) / queue.length) * 100;
+  document.getElementById('progFill').style.width = pct + '%';
+}
+
+function showFeedback(ok, correctHtml){
+  const fb = document.getElementById('feedback');
+  fb.className = ok ? 'feedback-box fb-ok' : 'feedback-box fb-no';
+  fb.innerHTML = ok
+    ? `<span class="fb-icon">✓</span><span>Correct!</span>`
+    : `<span class="fb-icon">✗</span><span>${correctHtml}</span>`;
+}
+
+document.getElementById('nextBtn').addEventListener('click', ()=>{
+  idx++;
+  if(idx >= queue.length){
+    showResults();
+  } else {
+    renderQuestion();
+  }
+});
+
+// ═══════════════════════════════════════════════
+//  RESULTS
+// ═══════════════════════════════════════════════
+function showResults(){
+  show('results');
+  const total = queue.length;
+  const pct = Math.round((score/total)*100);
+
+  document.getElementById('ringNum').textContent = score;
+  document.getElementById('ringLabel').textContent = `out of ${total}`;
+
+  // Animate ring
+  const circumference = 2 * Math.PI * 52; // r=52 → ~326.7
+  const offset = circumference - (pct / 100) * circumference;
+  setTimeout(()=>{
+    document.getElementById('ringCircle').style.strokeDashoffset = offset;
+  }, 100);
+
+  let title, sub;
+  if(pct===100)      { title='Perfect Score'; sub='Flawless — an outstanding result.'; }
+  else if(pct>=80)   { title='Excellent Work'; sub=`You scored ${pct}% — well above average.`; }
+  else if(pct>=60)   { title='Good Effort'; sub=`You scored ${pct}% — keep reviewing the material.`; }
+  else if(pct>=40)   { title='Keep Practising'; sub=`You scored ${pct}% — revisit the weaker areas.`; }
+  else               { title='Needs More Review'; sub=`You scored ${pct}% — go through the notes again.`; }
+
+  document.getElementById('resTitle').textContent = title;
+  document.getElementById('resSub').textContent   = sub;
+
+  // breakdown by week
+  const bk = document.getElementById('breakdown');
+  const weeksUsed = selectedWeeks.filter(w => weekScores[w] && weekScores[w].total > 0);
+  if(weeksUsed.length > 1){
+    bk.innerHTML = `<div class="breakdown-title">Score by Week</div><div class="bk-rows" id="bkRows"></div>`;
+    const rows = document.getElementById('bkRows');
+    weeksUsed.forEach(w => {
+      const {correct, total} = weekScores[w];
+      const p = total ? Math.round((correct/total)*100) : 0;
+      rows.innerHTML += `
+        <div class="bk-row">
+          <span class="bk-week">Week ${w}</span>
+          <div class="bk-bar-wrap"><div class="bk-bar" style="width:${p}%"></div></div>
+          <span class="bk-score">${correct}/${total}</span>
+        </div>`;
+    });
+  } else {
+    bk.innerHTML = '';
+  }
+}
+
+document.getElementById('retryBtn').addEventListener('click', ()=>{ startQuiz(); });
+document.getElementById('homeBtn').addEventListener('click', ()=>{ show('setup'); });
+
+// ═══════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════
+function show(id){
+  ['setup','quiz','results'].forEach(s => {
+    document.getElementById(s).classList.toggle('hidden', s !== id);
+  });
+}
+</script>
+</body>
+</html>
