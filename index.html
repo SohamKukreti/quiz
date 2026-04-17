@@ -911,8 +911,9 @@ function renderQuestion(){
   const optsEl = document.getElementById('opts');
   optsEl.innerHTML = '';
   const letters = ['A','B','C','D'];
+  const hasBothRef = q.o.some(opt => /\bboth\s*\(?a\)?\s*and\s*\(?b\)?/i.test(opt));
   let optOrder = q.o.map((text, i) => ({text, origIdx: i}));
-  if(shuffleOptsOn) shuffle(optOrder);
+  if(shuffleOptsOn && !hasBothRef) shuffle(optOrder);
   const remappedCorrect = optOrder.findIndex(o => o.origIdx === q.a);
   const qWithRemapped = {...q, a: remappedCorrect};
   optOrder.forEach((opt, i) => {
