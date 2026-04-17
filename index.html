@@ -595,6 +595,17 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
         <span class="tslider"></span>
       </label>
     </div>
+    <div class="card-divider" style="margin:.9rem -1.75rem"></div>
+    <div class="options-row">
+      <div>
+        <div class="opt-label">Shuffle Options</div>
+        <div class="opt-sub">Randomise answer choices each question</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="shuffleOptsTog" checked>
+        <span class="tslider"></span>
+      </label>
+    </div>
   </div>
 
   <button class="btn btn-primary" id="startBtn">Begin Quiz</button>
@@ -810,6 +821,7 @@ let score = 0;
 let weekScores = {};
 let selectedWeeks = [];
 let shuffleOn = true;
+let shuffleOptsOn = true;
 let incorrectQuestions = [];
 
 // ═══════════════════════════════════════════════
@@ -839,6 +851,7 @@ weeksGrid.addEventListener('change', ()=>{
 });
 
 document.getElementById('shuffleTog').addEventListener('change', e => { shuffleOn = e.target.checked; });
+document.getElementById('shuffleOptsTog').addEventListener('change', e => { shuffleOptsOn = e.target.checked; });
 
 document.getElementById('startBtn').addEventListener('click', ()=>{
   selectedWeeks = weekBoxes().filter(c=>c.checked).map(c=>+c.value);
@@ -898,11 +911,15 @@ function renderQuestion(){
   const optsEl = document.getElementById('opts');
   optsEl.innerHTML = '';
   const letters = ['A','B','C','D'];
-  q.o.forEach((opt, i) => {
+  let optOrder = q.o.map((text, i) => ({text, origIdx: i}));
+  if(shuffleOptsOn) shuffle(optOrder);
+  const remappedCorrect = optOrder.findIndex(o => o.origIdx === q.a);
+  const qWithRemapped = {...q, a: remappedCorrect};
+  optOrder.forEach((opt, i) => {
     const btn = document.createElement('button');
     btn.className = 'opt-btn';
-    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span><span class="opt-text">${opt}</span>`;
-    btn.addEventListener('click', () => handleAnswer(i, q));
+    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span><span class="opt-text">${opt.text}</span>`;
+    btn.addEventListener('click', () => handleAnswer(i, qWithRemapped, q));
     optsEl.appendChild(btn);
   });
 
@@ -913,7 +930,7 @@ function renderQuestion(){
   document.getElementById('nextRow').classList.add('hidden');
 }
 
-function handleAnswer(chosen, q){
+function handleAnswer(chosen, q, originalQ){
   const buttons = document.querySelectorAll('.opt-btn');
   buttons.forEach(b => b.disabled = true);
 
@@ -930,8 +947,9 @@ function handleAnswer(chosen, q){
     buttons[correct].classList.add('reveal');
     buttons.forEach((b,i)=>{ if(i!==chosen && i!==correct) b.classList.add('dim'); });
     const letters = ['A','B','C','D'];
-    showFeedback(false, `Correct answer: <strong>${letters[correct]}. ${q.o[correct]}</strong>`);
-    incorrectQuestions.push(q);
+    const correctText = buttons[correct].querySelector('.opt-text').innerHTML;
+    showFeedback(false, `Correct answer: <strong>${letters[correct]}. ${correctText}</strong>`);
+    incorrectQuestions.push(originalQ || q);
   }
 
   document.getElementById('scoreBadge').textContent = `${score} / ${idx+1}`;
