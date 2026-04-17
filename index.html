@@ -643,6 +643,7 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
     <div class="breakdown" id="breakdown"></div>
     <div class="res-btns">
       <button class="btn btn-primary" id="retryBtn">Retry Same Weeks</button>
+      <button class="btn btn-secondary" id="practiceWrongBtn" style="background:var(--no-bg);color:var(--no);border-color:var(--no-border)" class="hidden">Practice Incorrect Questions</button>
       <button class="btn btn-secondary" id="homeBtn">Change Weeks</button>
     </div>
   </div>
@@ -809,6 +810,7 @@ let score = 0;
 let weekScores = {};
 let selectedWeeks = [];
 let shuffleOn = true;
+let incorrectQuestions = [];
 
 // ═══════════════════════════════════════════════
 //  SETUP
@@ -871,6 +873,7 @@ function startQuiz(){
   idx = 0;
   score = 0;
   weekScores = {};
+  incorrectQuestions = [];
   selectedWeeks.forEach(w => weekScores[w]={correct:0,total:0});
   show('quiz');
   renderQuestion();
@@ -928,6 +931,7 @@ function handleAnswer(chosen, q){
     buttons.forEach((b,i)=>{ if(i!==chosen && i!==correct) b.classList.add('dim'); });
     const letters = ['A','B','C','D'];
     showFeedback(false, `Correct answer: <strong>${letters[correct]}. ${q.o[correct]}</strong>`);
+    incorrectQuestions.push(q);
   }
 
   document.getElementById('scoreBadge').textContent = `${score} / ${idx+1}`;
@@ -981,6 +985,14 @@ function showResults(){
   document.getElementById('resTitle').textContent = title;
   document.getElementById('resSub').textContent   = sub;
 
+  const practiceWrongBtn = document.getElementById('practiceWrongBtn');
+  if(incorrectQuestions.length > 0){
+    practiceWrongBtn.classList.remove('hidden');
+    practiceWrongBtn.textContent = `Practice Incorrect Questions (${incorrectQuestions.length})`;
+  } else {
+    practiceWrongBtn.classList.add('hidden');
+  }
+
   // breakdown by week
   const bk = document.getElementById('breakdown');
   const weeksUsed = selectedWeeks.filter(w => weekScores[w] && weekScores[w].total > 0);
@@ -1004,6 +1016,18 @@ function showResults(){
 
 document.getElementById('retryBtn').addEventListener('click', ()=>{ startQuiz(); });
 document.getElementById('homeBtn').addEventListener('click', ()=>{ show('setup'); });
+document.getElementById('practiceWrongBtn').addEventListener('click', ()=>{
+  const wrong = incorrectQuestions.slice();
+  if(shuffleOn) shuffle(wrong);
+  queue = wrong;
+  idx = 0;
+  score = 0;
+  incorrectQuestions = [];
+  weekScores = {};
+  wrong.forEach(q => { if(!weekScores[q.week]) weekScores[q.week]={correct:0,total:0}; });
+  show('quiz');
+  renderQuestion();
+});
 
 // ═══════════════════════════════════════════════
 //  HELPERS
