@@ -1360,6 +1360,21 @@ document.getElementById('nextBtn').addEventListener('click', ()=>{
   }
 });
 
+document.addEventListener('keydown', (e) => {
+  const key = e.key.toLowerCase();
+  const map = { a: 0, b: 1, c: 2, d: 3, '1': 0, '2': 1, '3': 2, '4': 3 };
+  if (key in map) {
+    const buttons = document.querySelectorAll('.opt-btn');
+    const i = map[key];
+    if (buttons[i] && !buttons[i].disabled) buttons[i].click();
+  } else if (key === 'enter' || key === ' ') {
+    const nextRow = document.getElementById('nextRow');
+    if (nextRow && !nextRow.classList.contains('hidden')) {
+      document.getElementById('nextBtn').click();
+    }
+  }
+});
+
 // ═══════════════════════════════════════════════
 //  RESULTS
 // ═══════════════════════════════════════════════
