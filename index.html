@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contextualizing Gender — Quiz</title>
+<title>Intro to IIoT &amp; Industry 4.0 — Quiz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
@@ -11,33 +11,37 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --cream:#F6F0E8;
-  --cream-dark:#EDE4D6;
-  --cream-mid:#F0E8DC;
+  --cream:#EDF5F0;
+  --cream-dark:#DDEAE3;
+  --cream-mid:#E5F0EB;
   --surface:#FFFFFF;
-  --surface-warm:#FDFAF6;
-  --border:#DDD4C4;
-  --border-light:#EAE2D4;
-  --text:#1A1410;
-  --text-mid:#4A4038;
-  --muted:#8A7E72;
-  --muted-light:#ADA49A;
-  --accent:#C96B4A;
-  --accent-hover:#B55A3A;
-  --accent-light:#F5E8E0;
-  --accent-pale:#FBF3EE;
-  --ok:#2A6B4A;
-  --ok-bg:#EAF4EE;
-  --ok-border:#B6D9C5;
-  --ok-light:#F0F9F4;
+  --surface-warm:#F5FAF7;
+  --border:#BAD4C5;
+  --border-light:#CCDFD6;
+  --text:#0F1A14;
+  --text-mid:#364A3E;
+  --muted:#637A6E;
+  --muted-light:#8FAF9F;
+  --accent:#2B7A52;
+  --accent-hover:#1F5E3E;
+  --accent-light:#D4EDDF;
+  --accent-pale:#E8F6EE;
+  --ok:#1A6B42;
+  --ok-bg:#E2F3EB;
+  --ok-border:#8EC9A8;
+  --ok-light:#ECF8F2;
   --no:#B83832;
   --no-bg:#FBF0EF;
   --no-border:#F0BFBC;
+  --prev:#6B4F2B;
+  --prev-bg:#F6F0E8;
+  --prev-border:#D4C0A0;
+  --prev-accent:#8B6914;
   --r:14px;
   --r-sm:10px;
-  --shadow-sm:0 1px 3px rgba(60,40,20,.06),0 2px 8px rgba(60,40,20,.04);
-  --shadow-md:0 4px 16px rgba(60,40,20,.08),0 1px 3px rgba(60,40,20,.06);
-  --shadow-lg:0 8px 32px rgba(60,40,20,.1),0 2px 8px rgba(60,40,20,.06);
+  --shadow-sm:0 1px 3px rgba(20,45,30,.06),0 2px 8px rgba(20,45,30,.04);
+  --shadow-md:0 4px 16px rgba(20,45,30,.08),0 1px 3px rgba(20,45,30,.06);
+  --shadow-lg:0 8px 32px rgba(20,45,30,.1),0 2px 8px rgba(20,45,30,.06);
 }
 
 /* ── SCROLLBAR ── */
@@ -56,7 +60,6 @@ body{
   flex-direction:column;
   align-items:center;
   padding:3rem 1.25rem 5rem;
-  /* Subtle grain texture */
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
 }
 
@@ -135,6 +138,45 @@ body{
   color:var(--muted);
   margin-bottom:1rem;
 }
+
+/* ── SEGMENTED CONTROL (session selector) ── */
+.seg-ctrl{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:.4rem;
+  background:var(--cream-dark);
+  border-radius:var(--r-sm);
+  padding:.3rem;
+}
+.seg-opt{
+  position:relative;
+  display:flex;
+}
+.seg-opt input{
+  position:absolute;
+  opacity:0;width:0;height:0;
+}
+.seg-opt span{
+  flex:1;
+  display:flex;align-items:center;justify-content:center;
+  padding:.55rem .5rem;
+  border-radius:8px;
+  font-size:.8rem;
+  font-weight:500;
+  color:var(--muted);
+  cursor:pointer;
+  transition:all .18s ease;
+  text-align:center;
+  line-height:1.3;
+  user-select:none;
+}
+.seg-opt input:checked + span{
+  background:var(--surface);
+  color:var(--accent);
+  font-weight:600;
+  box-shadow:var(--shadow-sm);
+}
+.seg-opt span:hover{color:var(--text-mid)}
 
 /* ── SELECT ALL ROW ── */
 .select-all-row{
@@ -265,12 +307,12 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
 .btn-primary{
   background:var(--accent);
   color:#fff;
-  box-shadow:0 2px 8px rgba(201,107,74,.25);
+  box-shadow:0 2px 8px rgba(43,122,82,.25);
 }
 .btn-primary:hover:not(:disabled){
   background:var(--accent-hover);
   transform:translateY(-1px);
-  box-shadow:0 4px 14px rgba(201,107,74,.32);
+  box-shadow:0 4px 14px rgba(43,122,82,.32);
 }
 .btn-primary:active:not(:disabled){transform:translateY(0)}
 .btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
@@ -300,7 +342,7 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
 }
 .prog-fill{
   height:100%;
-  background:linear-gradient(90deg,var(--accent),#E8896A);
+  background:linear-gradient(90deg,var(--accent),#52B882);
   border-radius:999px;
   transition:width .4s cubic-bezier(.4,0,.2,1);
 }
@@ -325,7 +367,12 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
 .week-badge{
   background:var(--accent-light);
   color:var(--accent);
-  border:1px solid rgba(201,107,74,.2);
+  border:1px solid rgba(43,122,82,.22);
+}
+.week-badge.prev-year{
+  background:var(--prev-bg);
+  color:var(--prev-accent);
+  border:1px solid var(--prev-border);
 }
 .counter{
   color:var(--muted);
@@ -371,7 +418,7 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
   border-color:var(--accent);
   background:#fff;
   color:var(--text);
-  box-shadow:0 2px 8px rgba(201,107,74,.1);
+  box-shadow:0 2px 8px rgba(43,122,82,.12);
   transform:translateX(2px);
 }
 .opt-btn:not([disabled]):hover .opt-letter{
@@ -463,7 +510,7 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
 .score-ring-track{fill:none;stroke:var(--cream-dark);stroke-width:5}
 .score-ring-fill{
   fill:none;
-  stroke:var(--accent);
+  stroke:url(#ringGrad);
   stroke-width:5;
   stroke-linecap:round;
   transform:rotate(-90deg);
@@ -516,7 +563,7 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
 }
 .bk-rows{display:flex;flex-direction:column;gap:.45rem}
 .bk-row{display:flex;align-items:center;gap:.75rem;font-size:.8rem}
-.bk-week{font-weight:500;min-width:56px;color:var(--text-mid)}
+.bk-week{font-weight:500;min-width:80px;color:var(--text-mid)}
 .bk-bar-wrap{
   flex:1;
   background:var(--cream-dark);
@@ -526,10 +573,11 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
 }
 .bk-bar{
   height:100%;
-  background:linear-gradient(90deg,var(--accent),#E8896A);
+  background:linear-gradient(90deg,var(--accent),#52B882);
   border-radius:999px;
   transition:width .6s cubic-bezier(.4,0,.2,1);
 }
+.bk-bar.prev{background:linear-gradient(90deg,var(--prev-accent),#C8960A)}
 .bk-score{font-weight:500;color:var(--muted);min-width:32px;text-align:right;font-variant-numeric:tabular-nums}
 
 /* ── DIVIDER LINE ── */
@@ -557,6 +605,7 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
   .logo h1{font-size:2rem}
   .q-text{font-size:1.1rem}
   body{padding:2rem 1rem 4rem}
+  .seg-ctrl{grid-template-columns:1fr}
 }
 @media(max-width:360px){
   .weeks-grid{grid-template-columns:repeat(2,1fr)}
@@ -570,16 +619,34 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
 <div id="setup">
   <div class="logo">
     <span class="logo-eyebrow">Academic Quiz</span>
-    <h1>Contextualizing Gender</h1>
-    <p class="logo-sub">12 Weeks<span></span>120 Questions<span></span>MCQ Format</p>
+    <h1>Intro to IIoT &amp; Industry 4.0</h1>
+    <p class="logo-sub" id="setupSub"></p>
     <div class="logo-rule"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Year / Session</div>
+    <div class="seg-ctrl" id="sessionCtrl">
+      <label class="seg-opt">
+        <input type="radio" name="session" value="current" checked>
+        <span>2026 Jan–Apr</span>
+      </label>
+      <label class="seg-opt">
+        <input type="radio" name="session" value="previous">
+        <span>2025 Jul–Oct</span>
+      </label>
+      <label class="seg-opt">
+        <input type="radio" name="session" value="both">
+        <span>Both</span>
+      </label>
+    </div>
   </div>
 
   <div class="card">
     <div class="section-label">Select Weeks</div>
     <div class="select-all-row">
       <input type="checkbox" id="selAll" checked>
-      <label for="selAll">Select all twelve weeks</label>
+      <label for="selAll" id="selAllLabel">Select all weeks</label>
     </div>
     <div class="weeks-grid" id="weeksGrid"></div>
   </div>
@@ -634,12 +701,18 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
 <div id="results" class="hidden">
   <div class="logo">
     <span class="logo-eyebrow">Quiz Complete</span>
-    <h1>Contextualizing Gender</h1>
+    <h1>Intro to IIoT &amp; Industry 4.0</h1>
     <div class="logo-rule"></div>
   </div>
   <div class="card res-center">
     <div class="score-display">
       <svg class="score-ring-svg" width="120" height="120" viewBox="0 0 120 120">
+        <defs>
+          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#2B7A52"/>
+            <stop offset="100%" stop-color="#52B882"/>
+          </linearGradient>
+        </defs>
         <circle class="score-ring-track" cx="60" cy="60" r="52"/>
         <circle class="score-ring-fill" id="ringCircle" cx="60" cy="60" r="52"
           stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
@@ -654,7 +727,7 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
     <div class="breakdown" id="breakdown"></div>
     <div class="res-btns">
       <button class="btn btn-primary" id="retryBtn">Retry Same Weeks</button>
-      <button class="btn btn-secondary" id="practiceWrongBtn" style="background:var(--no-bg);color:var(--no);border-color:var(--no-border)" class="hidden">Practice Incorrect Questions</button>
+      <button class="btn btn-secondary" id="practiceWrongBtn" style="background:var(--no-bg);color:var(--no);border-color:var(--no-border)">Practice Incorrect Questions</button>
       <button class="btn btn-secondary" id="homeBtn">Change Weeks</button>
     </div>
   </div>
@@ -663,152 +736,420 @@ input[type=checkbox]:hover:not(:checked){border-color:var(--accent)}
 </div><!-- /wrap -->
 <script>
 // ═══════════════════════════════════════════════
-//  QUESTION DATA  (week, question, options, correct-index 0-based)
+//  QUESTION DATA
 // ═══════════════════════════════════════════════
 const DATA = {
 1:[
-  {q:"The <em>Second Sex</em> was first published in:",o:["1945","1947","1949","1953"],a:2},
-  {q:"Which critic coined the term <em>Écriture féminine</em> or \"women's writing\"?",o:["Luce Irigaray","Julia Kristeva","Hélène Cixous","Nancy Chodorow"],a:2},
-  {q:"What is the name of the volume in <em>The Second Sex</em> (1949) which opens with a simple definition: Woman is \"a womb, an ovary\"?",o:["Destiny","Situation","History","Myth"],a:0},
-  {q:"Who is recognized as the first female professional writer of the Middle Ages and an author at the court of King Charles VI of France, known for <em>The Book of the City of Ladies</em>?",o:["Jane Anger","Mary Wollstonecraft","Virginia Woolf","Christine de Pizan"],a:3},
-  {q:"The epigraph of Simone de Beauvoir's <em>She Came to Stay</em> that says \"each consciousness pursues the death of the other\" is taken from:",o:["Nietzsche's <em>Thus Spoke Zarathustra</em>","Hegel's <em>Phenomenology of Spirit</em>","Sartre's <em>Being and Nothingness</em>","Kierkegaard's <em>Either/Or</em>"],a:1},
-  {q:"Simone de Beauvoir's novel <em>She Came to Stay</em> was published in:",o:["1937","1943","1949","1951"],a:1},
-  {q:"The film <em>And God Created Woman</em> was directed by:",o:["François Truffaut","Jean-Luc Godard","Roger Vadim","Claude Chabrol"],a:2},
-  {q:"Rosabeth Kanter's <em>Men and Women of the Corporation</em> (1977) explored:",o:["Gender bias in literature","Workplace structures and gender inequality in the US","Cultural construction of sexuality in Europe","Domestic division of labor in Spain"],a:1},
-  {q:"The <em>Cyborg Manifesto</em> (1985) was written by:",o:["Rosi Braidotti","Donna Haraway","Anne Balsamo","Teresa de Lauretis"],a:1},
-  {q:"Who wrote the essay <em>Silly Novels by Lady Novelists</em>?",o:["Mary Wollstonecraft","George Eliot","Virginia Woolf","Harriet Taylor"],a:1}
+  {q:"Which of the following sensors is an example of a Zero Order System?",o:["Thermometer", "Potentiometer", "Accelerometer", "Gyroscope"],a:1},
+  {q:"Which Zigbee device type acts as the root and also functions as the network bridge?",o:["Zigbee Router", "Zigbee End Device", "Zigbee Coordinator", "Zigbee Gateway"],a:2},
+  {q:"Which physical principle primarily explains the operation of hydraulic actuators?",o:["Pascal's law", "Bernoulli's principle", "Ideal gas law", "Faraday's law"],a:0},
+  {q:"At which OSI layer does the 6LoWPAN protocol primarily operate to enable IPv6 packets over IEEE 802.15.4?",o:["Physical Layer", "Network Layer (Adaptation Layer)", "Transport Layer", "Application Layer"],a:1},
+  {q:"Which IEEE 802.15.4 variant introduces Direct Sequence Ultra-Wideband (UWB) Physical Layer?",o:["802.15.4a", "802.15.4b", "802.15.4e", "802.15.4g"],a:0},
+  {q:"Fill in the blank: In the context of sensor characteristics, the properties of the system's transient response to an input are collectively termed as ………. Characteristics.",o:["Dynamic characteristics", "Static characteristics", "Time-domain characteristics", "Steady-state characteristics"],a:0},
+  {q:"In the context of the Wireless HART standard (IEC 62591) operating in the 2.4 GHz ISM band, what is the frequency gap maintained between two adjacent channels?",o:["2 MHz", "5 MHz", "20 MHz", "25 MHz"],a:1},
+  {q:"State True or False. A Passive NFC device can neither transmit nor read any data.",o:["True", "False"],a:1},
+  {q:"What is the data rate of Bluetooth 2.0?",o:["1 Mbps", "2 Mbps", "3 Mbps", "4 Mbps"],a:2},
+  {q:"Fill in the blank: The primary focus of the ISA 100.11a technology is in the implementation of ….. the industrial environment.",o:["Automation", "Connectivity", "Predictive maintenance", "Security"],a:0},
+  {q:"State True or False. Classical Internet is not meant for constrained IoT devices.",o:["True", "False"],a:0},
+  {q:"In the context of CORE Service Discovery, IoT devices (acting as mini web servers) register their resources to the Resource Directory (RD) using which interface?",o:["Lookup Interface (LI)", "Transport Interface (TI)", "Registration Interface (RI)", "Application Interface (AI)"],a:2},
+  {q:"In the context of QoS for IoT Networks, which data timeliness policy mandates dropping stale data and notifying the application that a dead-line has been missed?",o:["Latency budget policy", "Deadline policy", "Retention policy", "Priority policy"],a:1},
+  {q:"State True or False. MQTT works on the Request/Response framework on top of UDP.",o:["True", "False"],a:1},
+  {q:"Which of the following is/are advantages of XMPP?",o:["Interoperability", "Extensibility", "Flexibility", "All of these"],a:3}
 ],
 2:[
-  {q:"Who coined the term \"Womanism\" to refer to \"African-American feminism or the feminism of women of color\"?",o:["Laura Gilman","Alice Walker","Ula Y. Taylor","Hudson-Weems"],a:1},
-  {q:"Maria Stewart, in her speeches, compared African women to:",o:["Queen Cleopatra","King Solomon's temple builders","The women of Troy","The Virgin Mary"],a:1},
-  {q:"Which of the following is <em>not</em> a Slave Narrative?",o:["<em>Interesting Narrative of the Life of Olaudah Equiano</em> (1789)","<em>The Narrative of the Life of Frederick Douglass</em> (1845)","<em>Incidents in the Life of a Slave Girl</em> (1861)","<em>The Picture of Dorian Grey</em> (1891)"],a:3},
-  {q:"Who among the following defined Feminism as a \"movement to end sexism, sexist exploitation, and oppression\"?",o:["Susan Leigh Star","Teresa de Lauretis","bell hooks","Betty Friedan"],a:2},
-  {q:"Which of the following stereotypical figures presents Black women as obedient and faithful domestic servants who care for white children and family better than their own?",o:["The mammy","The Black matriarch","The welfare mother","The welfare queen"],a:0},
-  {q:"Which of the following books is <em>not</em> written by bell hooks?",o:["<em>The Black Unicorn</em> (1978)","<em>Talking Back: Thinking Feminist, Thinking Black</em> (1989)","<em>Sisters Of The Yam: Black Women and Self-recovery</em> (1993)","<em>Feminism is for Everybody</em> (2000)"],a:0},
-  {q:"Which stereotypical image is linked to working-class Black women's access to US welfare state entitlements — a mother who is lazy, content to collect welfare, and passes on corrupt values to her children?",o:["The mammy","The Black matriarch","The welfare mother","The Black Lady"],a:2},
-  {q:"Which among the following best describes the characteristics of Intersectionality?",o:["It is a framework for conceptualizing a person or group as affected by several discriminations and disadvantages.","It asserts that people are disadvantaged by multiple sources of oppression — race, class, gender identity, sexual orientation, religion, etc.","Both (a) and (b)","Only (a)"],a:2},
-  {q:"The film <em>Madea's Big Happy Family</em> (2011) perpetuates which controlling stereotype?",o:["The jezebel","The welfare mother","The Black matriarch","The Black lady"],a:2},
-  {q:"Who said, \"Black feminism is not a white feminism in blackface\"?",o:["Alice Walker","Audre Lorde","Toni Morrison","Ula Taylor"],a:1}
+  {q:"Which type of waste in the Lean Production System is defined as \"Non value-added movement of people\"?",o:["Transportation", "Motion", "Waiting", "Defects"],a:1},
+  {q:"Which type of business model value proposition exists when a bunch of goods/services are of higher value compared to the individual value of that product?",o:["Efficiency-centric", "Novelty-centric", "Lock-in centric", "Complementary"],a:3},
+  {q:"In the context of Lean Manufacturing wastes, what causes \"Processing waste\"?",o:["Producing products before demand", "Use of inappropriate tools for processing", "Excess inventory on the factory floor", "Non-value added movement of personnel"],a:1},
+  {q:"Which resource is primarily utilized to achieve \"Optimization\" in smart and connected products?",o:["Optimization algorithms", "Custom software", "External data sources", "Sensors only"],a:0},
+  {q:"Which specific \"New Material\" mentioned in the context of Physical Megatrends is described as being stronger than steel but thinner than a human hair?",o:["Carbon Fiber", "Graphene", "Aerogel", "Titanium Alloy"],a:1},
+  {q:"What are the three types of work to be noticed when analyzing \"Value streams\"?",o:["Design, Production, and Delivery", "Value-added, Incidental, and Pure Waste", "Manual, Automated, and Hybrid", "Planning, Execution, and Monitoring"],a:1},
+  {q:"What are the three categories of Megatrends driving the Fourth Industrial Revolution?",o:["Economic, Social, Political", "Physical, Digital, Biological", "Hardware, Software, Network", "Local, National, Global"],a:1},
+  {q:"Which material except Graphene is cited as an example of \"New Materials\" under Physical Megatrends?",o:["Silicon", "Thermoset plastics", "Copper", "Aluminum"],a:1},
+  {q:"How do you define Sustainability in the context of a Manufacturing Industry?",o:["To increase profit margins annually", "To continue at a fixed rate", "To eliminate all waste products", "To automate all processes"],a:1},
+  {q:"In the context of \"Government Regulations,\" what does the acronym EPA stand for?",o:["Economic Policy Agency", "Environmental Protection Agencies", "Energy Production Association", "Employment Protection Act"],a:1},
+  {q:"Which of the following is a characteristic of an economic depression?",o:["Duration is less than a year", "High employment rates", "Exponential unemployment increase", "Increase in available credit"],a:2},
+  {q:"Which layer in the architecture of smart and connected products is responsible for collecting and acquiring data?",o:["Digital layer", "Connectivity layer", "Physical layer", "Application layer"],a:2},
+  {q:"Which of the following is a \"Lock-in centric\" value creation model?",o:["Focusing on novelty", "Improving transaction efficiency", "Preventing customer migration", "Offering complementary products"],a:2},
+  {q:"Which characteristic of smart factories involves \"Self-configuration\"?",o:["Proactivity", "Transparency", "Agility", "Connection"],a:2},
+  {q:"In the automation pyramid of a smart factory, which level is at the very top?",o:["Device level", "Control level", "Manufacturing execution system level", "ERP level"],a:3}
 ],
 3:[
-  {q:"Which among the following novels combined African American folklore, history, and literary tradition to celebrate the moral and spiritual revival of Macon Dead, the first male protagonist in a Morrison novel?",o:["<em>Beloved</em> (1987)","<em>The Bluest Eye</em> (1970)","<em>Sula</em> (1973)","<em>Song of Solomon</em> (1977)"],a:3},
-  {q:"Who among the following was the first Black American woman to win the Nobel Prize for Literature, awarded in 1993?",o:["Alice Walker","Toni Morrison","Roxanne Gay","bell hooks"],a:1},
-  {q:"Who among the following critics coined the term 'queer theory'?",o:["Teresa de Lauretis","Nancy Chodorow","Judith Butler","Anne Balsamo"],a:0},
-  {q:"Which among the following fictional characters of Toni Morrison wished for blue eyes for the sake of 'beautifying herself'?",o:["Sula Peace","Pecola Breedlove","Sethe","Baby Suggs"],a:1},
-  {q:"Which among the following novels by Toni Morrison won the Pulitzer Prize for fiction?",o:["<em>Beloved</em> (1987)","<em>The Bluest Eye</em> (1970)","<em>Sula</em> (1973)","<em>Song of Solomon</em> (1977)"],a:0},
-  {q:"Which among the following critical works is authored by Nancy Chodorow?",o:["<em>Technologies of the Gendered Body</em> (1996)","<em>Bodies that Matter</em> (1993)","<em>Epistemology of the Closet</em> (1990)","<em>The Reproduction of Mothering</em> (1978)"],a:3},
-  {q:"In Toni Morrison's novel <em>Beloved</em> (1987), which character kills her daughter in order to save her from a life of slavery and misery?",o:["Denver","Paul D","Sethe","Mr. Bodwin"],a:2},
-  {q:"Which of the following propositions were made by Teresa De Lauretis in <em>Technologies of Gender</em> (1987)?",o:["Gender is a representation.","The construction of gender goes on through various technologies of gender and institutional discourses.","The representation of gender is its construction, occurring in public and private spaces, in media, and in ideology.","All of the above"],a:3},
-  {q:"Which of the following is <em>not</em> one of Teresa de Lauretis's four propositions?",o:["Gender is a representation","Gender's representation is its construction","Gender is biologically inherited","Gender construction is affected by its deconstruction through technologies of gender"],a:2},
-  {q:"Who famously said \"anatomy is destiny,\" linking gender to biological sex?",o:["Judith Butler","Michel Foucault","Sigmund Freud","Simone de Beauvoir"],a:2}
+  {q:"Who developed the first functioning Augmented Reality (AR) system in 1992?",o:["Ivan Sutherland", "Louis Rosenberg", "Thamos Caudell", "Morton Heilig"],a:1},
+  {q:"In the 5C Architecture of CPS, which level provides the \"Collaborative Diagnostics\" functionality?",o:["Cyber Level", "Cognition Level", "Configuration Level", "Conversion Level"],a:1},
+  {q:"State True or False: AR technologies are widely used in the field of medical science to perform complex surgeries in the domain of Neurosurgery, MRI, and X-Ray systems.",o:["True", "False"],a:0},
+  {q:"Which \"V\" of Big Data refers to the fact that Big Data supports diverse categories and formats of data with no restrictions over input data formats?",o:["Volume", "Velocity", "Variety", "Value"],a:2},
+  {q:"In the context of Data Acquisition in Industry 4.0, what are the three main steps followed during the \"Data pre-processing\" of relational data?",o:["Collection, Transmission, Storage", "Integration, Clearing, Redundancy Mitigation", "Analysis, Visualization, Decision Making", "Encryption, Compression, Archiving"],a:1},
+  {q:"What is the first step involved in the working of a Virtual Reality (VR) system?",o:["Display screen shows the user view through lenses", "Processing unit creates sensations for the user", "Lenses focus and reshape the image for each eye", "Sensors estimate the user's motion and direction in space"],a:3},
+  {q:"State True or False: Brain-machine interfaces are engineered systems based on cognition and neuroscience and are a part of CPS.",o:["True", "False"],a:0},
+  {q:"What are PMUs in the context of CPS for Smart Grid?",o:["Power Management Unit", "Phasor Measurement Unit", "Performance Monitoring Unit", "Project Management Unit"],a:1},
+  {q:"Which of the following options best describes a Collaboration Platform?",o:["Manufacturing hardware device", "Business networking software", "Entertainment social app", "Financial record database"],a:1},
+  {q:"What are the five phases of the Product Lifecycle?",o:["Plan, Do, Check, Act", "Design, Build, Test, Deploy", "Ideate, Create, Market, Sell", "Visualize, Explain, Perceive, Retire"],a:3},
+  {q:"Which of the following is a Technique/Method proposed to refine production across the lifecycle?",o:["ABC (Activity Based Costing)", "XYZ Analysis", "PQR Theory", "LMN Modeling"],a:0},
+  {q:"Which of the following best describes Artificial Intelligence (AI)?",o:["Hardware manufacturing process", "Manmade thinking power", "Database management system", "Manual data entry"],a:1},
+  {q:"Fill in the blank. Declarative knowledge is also known as",o:["Operational knowledge", "Heuristic knowledge", "Relational knowledge", "Procedural knowledge"],a:2},
+  {q:"Which of the following is an usecase of AI in Industry 4.0?",o:["Increasing manual labor", "Reducing internet usage", "Slowing production cycles", "Ensuring machine safety"],a:3},
+  {q:"Which of the following statement best describes the characteristics of Unstructured data?",o:["Possesses pre-defined model", "Stored in relational databases", "Managed by SQL", "No pre-defined model"],a:3}
 ],
 4:[
-  {q:"Who among the following wrote <em>The Wilde Century</em> (1994), which explored how notions of \"queerness\" were closely linked to upper-class effeminacy through the 20th century?",o:["David Halperin","Gayle Rubin","Alan Sinfield","Martha Vicinius"],a:2},
-  {q:"In which year did Gayle Rubin publish her critical essay \"The Traffic in Women: Notes on the 'Political Economy'\"?",o:["1975","1955","1970","1972"],a:0},
-  {q:"Which of the following is a stage of Coming Out according to the Cass Theory developed by Vivian Cass?",o:["Identity Tolerance: acceptance of one's homosexuality increases and people begin to tolerate their identity.","Identity Acceptance: the person feels more connected to the LGBTQIA+ community and prefers being with them.","Both a and b","None of the Above"],a:2},
-  {q:"The antonym of the word <em>transgender</em> is ________",o:["Genderfluid","Cisgender","Heterosexual","Homosexual"],a:1},
-  {q:"Who wrote the dissertation entitled <em>The Valley of Kings: Leathermen in San Francisco (1960–1990)</em>, hailed as the most authoritative history of gay men's leather culture in San Francisco?",o:["Eve Sedgwick","Nancy Chodorow","Judith Butler","Gayle Rubin"],a:3},
-  {q:"Which of the following are features of non-binary gender / genderqueer?",o:["It is an umbrella term for people who feel their gender cannot be defined within the margins of the gender binary.","They understand their gender in a way that goes beyond identifying as either a man or woman.","Both a and b","None of the Above"],a:2},
-  {q:"Who among the following wrote <em>Between Men: English Literature and Male Homosocial Desire</em> (1985)?",o:["Gayle Rubin","Eve Sedgwick","Karl Marx","Diana Fuss"],a:1},
-  {q:"Which among the following essays inspired Eve Sedgwick to write her seminal work <em>Epistemology of the Closet</em> (1990)?",o:["Gretel Ehrlich's \"The Solace of Open Spaces\" (1985)","D. A. Miller's \"Secret Subjects, Open Subjects\" (1988)","Meghan Daum's \"My Misspent Youth\" (1999)","Jamaica Kincaid's \"The Ugly Tourist\" (1988)"],a:1},
-  {q:"Which famous essay by Gayle Rubin begins with the argument that sexuality is not a frivolous diversion from the more critical problems of poverty, war, disease, racism, or nuclear annihilation?",o:["\"The Traffic in Women: Notes on the 'Political Economy' of Sex\"","\"Thinking Sex: Notes for a Radical Theory of the Politics of Sexuality\"","\"Slouching Towards Bethlehem\"","\"The Ugly Tourist\""],a:1},
-  {q:"In Proust's <em>In Search of Lost Time</em>, Eve Sedgwick identifies Baron de Charlus as:",o:["A tragic heterosexual hero","A \"spectacularly closeted\" gay man","A symbol of religious purity","A critique of French politics"],a:1}
+  {q:"Which component of Cybersecurity protects applications from outer threats, often using firewalls?",o:["Application Security", "Network Security", "Cloud Security", "End-user Education"],a:0},
+  {q:"What is Zephyr?",o:["A Smart Sensor", "An Website", "An OS", "None of these"],a:2},
+  {q:"Fill in the blank: Most of the commonly used ransomware attacks use …………………. where the user receives a legal file as an attachment and is skillfully forced to download or open it.",o:["Worm", "Virus", "Trojan", "Malware"],a:2},
+  {q:"In the Software-Defined Cloud Manufacturing Architecture (SDCMA), which component is responsible for \"detecting abnormality\"?",o:["Control Elements (CE)", "Hardware Plane", "Ensemble Intelligence Framework (EIF)", "Software Plane"],a:2},
+  {q:"Fill in the blank: Typically, ………… form the core of the smart sensor nodes.",o:["Transistors", "Microprocessors", "MOSFETS", "Diodes"],a:1},
+  {q:"Which cybersecurity component involves \"strategies to maintain the availability, integrity, and confidentiality of business data\"?",o:["Network Security", "Operational Security", "Information Security", "Physical Security"],a:2},
+  {q:"Which of the following is NOT a protected asset in cybersecurity?",o:["Hardware", "Software", "Data", "Public domain information"],a:3},
+  {q:"How does IIoT modify traditional automation techniques?",o:["By removing all sensors", "By exploiting IT technology", "By using manual tools", "By ignoring data"],a:1},
+  {q:"Which of the following has been identified as a major challenge in IIoT deployment?",o:["Excessive standardization", "Lack of generated data", "Surplus of skilled workers", "Data integration challenges"],a:3},
+  {q:"How does Industrial Internet assist Power Production?",o:["Increases inspection costs", "Locates broken equipment easily", "Disconnects the grid", "Hides performance data"],a:1},
+  {q:"State True or False: The Industrial Internet can benefit commercial aviation industries by improving both airline operations and asset management.",o:["True", "False"],a:0},
+  {q:"What is considered the primary source of IIoT data?",o:["Cloud Server", "Actuator", "Sensor", "Microprocessor"],a:2},
+  {q:"Fill in the blank. Conventional Sensing is primarily involved in",o:["Feedback automation", "Cloud computing", "Internet connectivity", "Big data analytics"],a:0},
+  {q:"Which challenge of Industry 4.0 is directly associated with ageing society and lack of skilled workers?",o:["Dynamic market conditions", "Resource utilization", "Constrained workforce", "Product management"],a:2},
+  {q:"Efficient use of materials, water, and energy is categorized under which expected feature of Industry 4.0?",o:["Competitiveness", "Innovation", "Workforce", "Efficiency"],a:3}
 ],
 5:[
-  {q:"Which among the following novels is narrated by an intersex character?",o:["<em>Wolf Hall</em> (2009) by Hilary Mantel","<em>Middlesex</em> (2002) by Jeffrey Eugenides","<em>Atonement</em> (2001) by Ian McEwan","<em>The Line of Beauty</em> (2004) by Alan Hollinghurst"],a:1},
-  {q:"Which Greek dramatist portrayed Achilles and Patroclus as pederastic lovers?",o:["Euripides","Aristophanes","Aeschylus","Sophocles"],a:2},
-  {q:"Who among the following directed the 2011 film <em>J. Edgar</em> based on the career of FBI director John Edgar Hoover?",o:["Clint Eastwood","Steven Spielberg","Martin Scorsese","Christopher Nolan"],a:0},
-  {q:"Who among the following is the Latin poet who wrote devotional poems to a woman named Lesbia in Sapphic metre?",o:["Virgil","Catullus","Horace","Ovid"],a:1},
-  {q:"\"I trowe he were gelding or mere\" — these lines from the General Prologue to Chaucer's <em>The Canterbury Tales</em> describe the Pardoner. What does the word \"mere\" imply here?",o:["Aggressive","Masculine","Effeminate","Manipulative"],a:2},
-  {q:"In which year did Queen Elizabeth II grant Alan Turing a posthumous royal pardon for his 1952 conviction for 'gross indecency'?",o:["2020","2013","2001","1999"],a:1},
-  {q:"Which American novelist, who is openly gay, won the 2018 Pulitzer Prize for fiction for his novel <em>Less</em>?",o:["Jeffrey Eugenides","James Baldwin","Christopher Isherwood","Andrew Sean Greer"],a:3},
-  {q:"Which 20th-century novel was the basis for the 2015 romantic period film <em>Carol</em>?",o:["<em>The Price of Salt</em> (1952) by Patricia Highsmith","<em>The Well of Loneliness</em> (1928) by Radclyffe Hall","<em>Oranges Are Not the Only Fruit</em> (1985) by Jeanette Winterson","<em>The Color Purple</em> (1982) by Alice Walker"],a:0},
-  {q:"In Shakespeare's <em>As You Like It</em>, what is the name that Rosalind chooses from Greek mythology for her cross-dressed male character?",o:["Ganymede","Cesario","Hermes","Artemis"],a:0},
-  {q:"Which English painter described the concept of 'the line of beauty' in his 1753 book <em>The Analysis of Beauty</em>?",o:["John Ruskin","William Hogarth","Inigo Jones","Joshua Reynolds"],a:1}
+  {q:"In the context of the \"Value Proposition\" building block, which of the following is considered a qualitative value?",o:["Price", "Post-purchase cost reduction", "Customer experience", "Product performance"],a:2},
+  {q:"A business model that serves specific and specialized customer groups is known as a:",o:["Mass market", "Segmented market", "Niche market", "Diversified market"],a:2},
+  {q:"Credits and cash owned by an organization are classified under which asset category?",o:["Physical assets", "Human assets", "Intellectual assets", "Financial assets"],a:3},
+  {q:"Which component of the IIoT business model focuses on solving the complexities and uncertainties inherent in interactions between various business actors?",o:["Value Proposition", "Value Network", "Value Capturing", "Value Communication"],a:3},
+  {q:"The \"Information Domain\" in IIRA handles data persistence. In the context of Big Data generated by IIoT, which \"V\" refers to the trust-worthiness or quality of the data?",o:["Volume", "Velocity", "Variety", "Veracity"],a:3},
+  {q:"Which of the following is considered a \"Lagging KPI\" for occupational safety?",o:["Percentage of workers with adequate safety training", "Number of OSH audits performed", "Frequency of observed unsafe behavior", "Number of production days lost due to sickness absence"],a:3},
+  {q:"Caterpillar uses IoT combined with which technology for machine monitoring?",o:["Virtual Reality (VR)", "Augmented Reality (AR)", "Blockchain technology", "Quantum computing"],a:1},
+  {q:"Fill in the blank. Maersk uses IoT primarily for ……..",o:["Smart Logistics", "Manufacturing cars", "Generating electricity", "Mining coal"],a:0},
+  {q:"What does a Business Model primarily describe?",o:["Technical hardware specifications", "Rationale of creating value", "Employee holiday schedules", "Office floor plan"],a:1},
+  {q:"State True or False: Lack of interoperability leads to increased complexity.",o:["True", "False"],a:0},
+  {q:"Fill in the blank. The three categories of IIoT business models are Cloud-based, Process-Oriented, and ………. Business Model.",o:["Hardware-Oriented", "Service-Oriented", "Product-Oriented", "Data-Oriented"],a:1},
+  {q:"In the IIRA Framework, what are defined as \"collection of ideas which describe, analyze, and solve the set of specific concerns\"?",o:["Stakeholders", "Architecture Frames", "Viewpoints", "Testbeds"],a:2},
+  {q:"Which architecture pattern allows for fast device-to-device integration with minimum response time?",o:["Three-tier architecture", "Client-Server architecture", "Layered Databus pattern", "Gateway-mediated architecture"],a:2},
+  {q:"Which element in the Usage Viewpoint of IIRA is defined as the \"basic unit of work\" carried out by a party assuming a role?",o:["Task", "Activity", "Agent", "Workflow"],a:0},
+  {q:"Which IIRA viewpoint relates to the technical representation of an IIoT system including interfaces, protocols, and behaviors?",o:["Functional Viewpoint", "Implementation Viewpoint", "Usage Viewpoint", "Business Viewpoint"],a:1}
 ],
 6:[
-  {q:"Who among the following wrote the essay \"One is Not Born a Woman\"?",o:["Luce Irigaray","Judith Butler","Monique Wittig","Jacques Derrida"],a:2},
-  {q:"Judith Butler, in <em>Gender Trouble</em>, refuted Lacan's argument about feminine 'masquerade' by referring to \"Womanliness as a Masquerade\" (1929) written by a British psychoanalyst. Who is the author of this essay?",o:["Nancy Chodorow","Toril Moi","Joan Riviere","Hanna Segal"],a:2},
-  {q:"Which feminist critic argued that within a phallogocentric language, women constitute the unrepresentable or a linguistic absence because of the masculinist signifying economy?",o:["Patricia Hill Collins","Simone de Beauvoir","Luce Irigaray","Kimberley Crenshaw"],a:2},
-  {q:"Who among the following wrote <em>Desire in Language</em> (1969), which claims the existence of an alternate dimension within the Symbolic where language has multiple meanings?",o:["Betty Friedan","Elaine Showalter","Julia Kristeva","Gayatri Chakravarty Spivak"],a:2},
-  {q:"In <em>Gender Trouble</em>, Judith Butler critically examines the politics of sexual discontinuity with reference to a 19th-century intersex individual. What is the name of this individual?",o:["Herculine Barbin","Karl Baer","Lili Elbe","Heinrich Ratjen"],a:0},
-  {q:"Who among the following is the author of the novel <em>My Ántonia</em> (1918), which tells the story of a young woman immigrant in the western prairies of America?",o:["John Steinbeck","J. D. Salinger","Harper Lee","Willa Cather"],a:3},
-  {q:"What is the theoretical term used by Louis Althusser to describe the process by which ideology embodied in social institutions constitutes individual subjects' identities through the process of \"hailing\" them in social interactions?",o:["Hegemony","Subaltern","Interpellation","Masquerade"],a:2},
-  {q:"Judith Butler's essay \"Performative Acts and Gender Constitution\" was published in which year?",o:["1985","1988","1990","1993"],a:1},
-  {q:"The character Tommy Shirley's real name in <em>Tommy the Unsentimental</em> is:",o:["Antonia","Jessica","Theodosia","Clare"],a:2},
-  {q:"Luce Irigaray's <em>Speculum of the Other Woman</em> was published in which year?",o:["1974","1980","1969","1978"],a:0}
+  {q:"What is the usual packet size requirement for URLLC?",o:["8 B", "16-32 B", "32-200 B", "1024 B"],a:2},
+  {q:"Fill in the blank: ModBus-TCP is an industrial communication protocol that is primarily designed to run over……….",o:["Serial RS-232 links", "Standard Ethernet and TCP/IP", "Bluetooth Low Energy", "Satellite communication"],a:1},
+  {q:"Which Profibus variant is designed for high-speed communication between automation systems and equipment using RS-485 or fiber optics?",o:["Profibus PA", "Profibus FMS", "Profibus DP", "Profinet"],a:2},
+  {q:"What is the maximum transmission rate of the \"Standard CC-Link\" technology?",o:["156 kbps", "500 kbps", "10 Mbps", "1 Gbps"],a:2},
+  {q:"Which gas sensing method relies specifically on \"Electrical Variation\" for detection?",o:["Acoustic Methods", "Optic Methods", "Metal Oxide Semiconductors (MOS)", "Calorimetric Method"],a:2},
+  {q:"In manufacturing processes, Fieldbus is primarily used for which type of data transfer?",o:["Clock synchronization", "High-performance analytics", "Periodic I/O data transfer", "Wide Area Network (WAN) management"],a:2},
+  {q:"Under which category of sensors do \"smoke detectors\" and \"alcohol detectors\" fall in an industrial monitoring context?",o:["Optical sensors", "Thermal sensors", "Chemical sensors", "Electrical sensors"],a:2},
+  {q:"Which variant of the CC-Link protocol is specifically designed to ensure error-free data communication of large data through Industrial Ethernet?",o:["CC-Link Safety", "CC-Link LT", "CC-Link IE", "CC-Link RTU"],a:2},
+  {q:"Improvement of which of the following is emphasized as a key concern in IIoT systems?",o:["Only profitability", "Only system throughput", "Efficiency, productivity, health, and safety", "Hardware miniaturization alone"],a:2},
+  {q:"State True or False. The output voltage of the LM35 sensor is linearly proportional to Kelvin temperature.",o:["True", "False"],a:1},
+  {q:"Fill in the blank: Air quality monitoring and alert systems with gas sensing units are primarily deployed to …………..",o:["Improve network bandwidth", "Avoid risks of harmful gas exposure", "Reduce hardware cost", "Increase cloud storage"],a:1},
+  {q:"Which of the following belongs to the Fieldbus category?",o:["Profinet", "EtherNet/IP", "TSN", "Modbus-RTU"],a:3},
+  {q:"Which Profibus variant handles communication between PCs and Programmable Logic Controllers?",o:["Profibus DP", "Profibus PA", "Profibus FMS", "Profibus IE"],a:2},
+  {q:"Which network topology is used by Interbus?",o:["Bus", "Star", "Active ring", "Hybrid"],a:2},
+  {q:"Which frequency band is classified as high band in 5G NR?",o:["< 1 GHz", "1-6 GHz", "> 24 GHz", "6-24 GHz"],a:2}
 ],
 7:[
-  {q:"What is Louis Althusser's concept of \"interpellation\" also known as?",o:["Translation","Hailing","Perception","Reconstruction"],a:1},
-  {q:"Which U.S. military policy does Butler critique as restricting homosexual identity expression?",o:["Protect and Serve","Don't Ask, Don't Tell","Free Speech Act","Civil Equality Act"],a:1},
-  {q:"What central issue does Judith Butler explore in the essay \"Gender in Translation\"?",o:["The biological basis of sex","The role of capitalism in gender formation","The challenges of translating the term \"gender\" across languages","The decline of feminist movements"],a:2},
-  {q:"Which philosopher discussed \"monolingual obstinacy,\" a concept Butler draws on?",o:["Michel Foucault","Simone de Beauvoir","Jacques Derrida","John Money"],a:2},
-  {q:"According to Butler, sexuality and gender should be understood as:",o:["Naturally linked and inseparable","Determined entirely by biology","Independent categories that do not automatically correspond","Defined by medical institutions only"],a:2},
-  {q:"Why do some LGBTQ+ advocates want to retain the diagnosis of Gender Identity Disorder (GID) in the DSM?",o:["Because it ensures gender binaries are medically enforced","Because it allows insurance access for transitioning-related treatments","Because they believe gender variance is a mental illness","Because it removes stigma around intersex identities"],a:1},
-  {q:"According to Butler's discussion of Jessica Benjamin's work, what is central to the psychoanalytic idea of relationality?",o:["Recognition between self and other","Biological determinism","State-approved gender norms","Complete erasure of identity"],a:0},
-  {q:"What does Butler argue about the incest taboo and kinship?",o:["It strengthens diverse family structures","It supports equality between heterosexual and queer kinship forms","It reinforces heterosexual norms and delegitimizes alternative kinship models","It is irrelevant to gender studies"],a:2},
-  {q:"Nancy Fraser's critique engages Butler through which primary concept derived from Hegel?",o:["Psychoanalytic sexuality","Recognition","Subjective autonomy","Market utility"],a:1},
-  {q:"Butler integrates Homi K. Bhabha's idea of cultural translation to argue that:",o:["The universal must be understood through multiple cultural versions rather than a single fixed form","Universal rights already apply equally to all gender identities","Translation eliminates cultural difference","Minority cultures must assimilate to dominant norms"],a:0}
+  {q:"What does LPWAN stand for?",o:["Low Power Wireless Access Network", "Long Power Wide Area Network", "Low Power Wide Area Network", "Long Power Wireless Area Network"],a:2},
+  {q:"LoRa technology operates in which of the following frequency bands?",o:["License-free sub-gigahertz bands", "Licensed microwave bands", "Optical frequency bands", "Millimeter-wave bands"],a:0},
+  {q:"What is the maximum wireless throughput achieved by SIGFOX?",o:["1 kbps", "500 bps", "10 kbps", "100 bps"],a:3},
+  {q:"Which IEEE standard forms the basis of the physical and MAC layers of Zigbee?",o:["IEEE 802.11", "IEEE 802.3", "IEEE 802.15.4", "IEEE 802.16"],a:2},
+  {q:"Which of the following is NOT a Zigbee-supported network topology?",o:["Star", "Tree", "Mesh", "Ring"],a:3},
+  {q:"What is Xbee in the context of Zigbee communication?",o:["A network protocol", "A product that uses the Zigbee protocol", "A routing algorithm", "A MAC-layer standard"],a:1},
+  {q:"Which sensor in an autonomous vehicle generates data in the range of 20-40 MB/s?",o:["GPS", "RADAR", "Camera", "SONAR"],a:2},
+  {q:"What type of computing processes data closer to sensors before sending it to the cloud?",o:["Edge computing", "Centralized computing", "Distributed computing", "Batch computing"],a:0},
+  {q:"In an end-to-end IIoT processing pipeline, where are rules initially configured?",o:["At the sensor nodes", "In the cloud", "At the edge analytics agent", "At the actuators"],a:1},
+  {q:"What is the main objective of AR drones-based precision agriculture?",o:["Monitoring soil moisture", "Precise fertilizer spray to weeds", "Autonomous harvesting", "Livestock monitoring"],a:1},
+  {q:"SWAMP enables a smart management layer between which two systems?",o:["Water distribution network and farm-based irrigation system", "Cloud services and mobile applications", "Sensors and actuators", "Enterprise and automation networks"],a:0},
+  {q:"What do process variables represent in an industrial control system?",o:["Controller decision outputs", "Standard operating limits", "Values of process parameters measured using sensors", "Signals sent to actuators"],a:2},
+  {q:"What is the fundamental element of industrial control systems for automatic control?",o:["Control loops", "Sensors", "Controllers", "Actuators"],a:0},
+  {q:"Which component of a SCADA system interfaces directly with sensors to read and convert data?",o:["The Supervisory System", "The Human Machine Interface (HMI)", "The Communication Infrastructure", "Programmable Logic Controllers (PLC) and Remote Terminal Units (RTU)"],a:3},
+  {q:"What is a primary advantage of PLCs over traditional hard-wired systems?",o:["They are physically larger and more durable.", "They can be easily reprogrammed, making maintenance and upgrades more economical.", "They operate at a much higher voltage.", "They do not require a power supply."],a:1}
 ],
 8:[
-  {q:"According to Butler, performativity and precarity become linked because:",o:["Both concepts disregard the role of social norms","Gender performance determines who counts as a recognizable subject","Precarity eliminates all forms of gender identity","Performativity guarantees equal recognition to all identities"],a:1},
-  {q:"Which philosopher does Butler draw upon when discussing the idea of \"the right to have rights\"?",o:["Simone de Beauvoir","Hannah Arendt","Gilles Deleuze","Michel Foucault"],a:1},
-  {q:"Butler critiques identity politics because it:",o:["Works best through strict gender binaries","Reduces diverse lived experiences into a singular group identity","Ensures universal equality for all identities","Eliminates the role of public assembly"],a:1},
-  {q:"The \"right to appear,\" as discussed by Butler, refers to:",o:["The ability for individuals to be visibly present in public without fear of violence or erasure","A privilege granted solely through medical documentation","A symbolic right with no connection to lived experience","A cultural tradition unrelated to gender politics"],a:0},
-  {q:"The suffrage movement is significant because it:",o:["Focused only on access to education","Secured women's right to vote after decades of struggle","Originated in Europe during the 21st century","Eliminated all forms of gender discrimination globally"],a:1},
-  {q:"The MeToo movement originally began in 2006 with the work of:",o:["Simone de Beauvoir","Gloria Steinem","Tarana Burke","Alyssa Milano"],a:2},
-  {q:"Max Weber's concept of charismatic authority emphasizes leadership based on:",o:["Rational legal structures","Personal legitimacy and emotional influence","Traditional heritage and inheritance","Bureaucratic procedures"],a:1},
-  {q:"The example of Rosa Parks refusing to give up her seat illustrates:",o:["A tactic of creating a powerful and symbolic origin story","A spontaneous action with no strategic significance","A fictional narrative used only in academic theory","A failure of social movement strategy"],a:0},
-  {q:"One major criticism of the mainstream #MeToo movement is that it:",o:["Has focused primarily on privileged voices, excluding many marginalized survivors","Was entirely led by nonprofit organizations","Rejected all digital activism approaches","Focused only on LGBTQIA advocacy and ignored women"],a:0},
-  {q:"One documented backlash effect after #MeToo was that some senior male professionals:",o:["Began avoiding one-on-one meetings with junior female colleagues due to fear or discomfort","Increased gender equity training in their companies","Eliminated all workplace hierarchies","Encouraged more informal mentorship practices"],a:0}
+  {q:"What is the purpose of feature extraction in ML?",o:["Convert raw data into compressed bitstreams only", "Convert raw data to information that relates to the physical state of the asset", "Encrypt sensor data for security", "Remove time stamps from data"],a:1},
+  {q:"What is a primary goal of applying analytics in industrial systems?",o:["Maximizing data volume", "Replacing all controllers with cloud services", "Improving operational platform, performance, and safety", "Eliminating human workers completely"],a:2},
+  {q:"What kind of data does supervised learning require?",o:["Completely unlabeled streams", "Only binary sensor signals", "Labeled datasets with known output classes or values", "Data without any prior samples"],a:2},
+  {q:"Which of the following is explicitly listed as a goal of IIoT analytics?",o:["Manual inspection", "Dynamic operations optimization", "Hardware miniaturization", "Network routing"],a:1},
+  {q:"What approach replaces physics-based models in modern IIoT analytics?",o:["Data-driven modelling using ML and DL", "Heuristic optimization", "Rule-based control", "Manual calibration"],a:0},
+  {q:"Data Science is an interdisciplinary field involving which of the following areas?",o:["Only computer science", "Only data processing", "Only artificial intelligence", "Computer science, statistics, mathematics, machine learning, and domain expertise"],a:3},
+  {q:"Fill in the blank. Unsupervised learning is primarily used for identifying similar groups of data called ………….",o:["Clustering", "Classification", "Regression", "Prediction"],a:0},
+  {q:"Which clustering algorithm allows a data point to belong to more than one cluster?",o:["K-Means", "Linear Regression", "Decision Tree", "Fuzzy c-Means"],a:3},
+  {q:"Fill in the blank. Machine learning algorithms are not useful for …………….. Data.",o:["Structured", "Temporal", "High dimensional", "Labeled"],a:2},
+  {q:"State True or False. Deep learning mimics the working function of billions of neurons in the human brain.",o:["True", "False"],a:0},
+  {q:"Platform-as-a-Service mainly allows industries to do what?",o:["Only deploy hardware", "Self-develop applications", "Store raw sensor data only", "Replace networking infrastructure"],a:1},
+  {q:"Which type of data is explicitly mentioned as contributing to cloud demand in IIoT?",o:["Image data", "M2M sensor data", "Social media data", "Textual reports"],a:1},
+  {q:"State True or False. Increase in number of devices makes IIoT ecosystems more complex, necessitating cloud-based device management.",o:["True", "False"],a:0},
+  {q:"What is one key purpose of a Service Level Agreement (SLA) for IIoT?",o:["Eliminating cloud providers", "Promising deliverables from cloud providers", "Increasing hardware redundancy", "Enforcing local computation"],a:1},
+  {q:"Fill in the blank. A good SLA should be affordable, quantifiable, controllable, meaningful, mutually acceptable, and ……………….",o:["Flexible", "Enforceable", "Achievable", "Adaptive"],a:2}
 ],
 9:[
-  {q:"The term <em>hegemonic masculinity</em> refers to:",o:["A biological hierarchy based on physical strength","A historically dominant pattern of masculinity that legitimizes male power and privilege","A temporary cultural trend among boys","A personality disorder"],a:1},
-  {q:"One major criticism of early formulations of hegemonic masculinity is that they:",o:["Were too focused on digital masculinity","Underestimated biological determinism","Relied heavily on rigid, heteronormative models and ignored diversity among men","Were overly centred on women's experiences"],a:2},
-  {q:"Connell and Messerschmidt argue the concept must be revisited because:",o:["Changing global and social conditions require a more nuanced understanding of masculinity","Masculinity theory is complete and needs no revision","Gender hierarchy is no longer relevant","Masculinity is now purely biological"],a:0},
-  {q:"The concept of <em>geographies of masculinities</em> emphasizes:",o:["Masculinity operates differently at local, national, and global scales","Masculinity never changes across cultures","Geography plays no role in how gender is formed","Masculinity can only be studied through biology"],a:0},
-  {q:"Beasley argues that masculinity studies and feminist theory are best understood as:",o:["Fully overlapping and identical frameworks","Interdependent fields with shared intellectual histories","Opposing disciplines with irreconcilable goals","Completely unrelated academic areas"],a:1},
-  {q:"The concept of <em>strategic essentialism</em> in Beasley's analysis refers to:",o:["Rejecting all identity labels permanently","Treating masculinity as biologically fixed","Temporarily using identity categories for political action or solidarity","Erasing gender differences to create neutrality"],a:2},
-  {q:"Farahani and Thapar-Bjorkert critique Western masculinity studies because they:",o:["Always prioritize postcolonial identities","Have historically been ethnocentric and race-blind","Fully integrate postcolonial perspectives","Do not recognize masculinity as a gendered concept"],a:1},
-  {q:"The term <em>colonial feminism</em>, referenced through Leila Ahmed, describes:",o:["The refusal to engage with gender politics in colonial settings","Western attempts to \"save brown women from brown men\" as justification for domination","A feminist movement led entirely by women from colonized nations","Feminism that rejected discussions of race and religion"],a:1},
-  {q:"One major contemporary framework discussed for involving men in gender justice activism is:",o:["Military-based discipline programs","Global initiatives like HeForShe, MenEngage Alliance, and the White Ribbon Campaign","Exclusive religious institutions","Corporate-only diversity hiring"],a:1},
-  {q:"According to Peretz, accountability in men's engagement programmes raises questions such as:",o:["Who men should be answerable to when participating in feminist or anti-violence work","Whether men should abandon activism","How men can preserve privilege while supporting justice","Whether feminist theory should avoid intersectionality"],a:0}
+  {q:"Why is Julia programming considered advantageous?",o:["It is slower than Python.", "It merges Python's benefits with C's performance.", "It is a closed-source language.", "It does not support parallelism."],a:1},
+  {q:"What relationship does Linear Regression detect?",o:["A non-linear relationship between binary variables", "A clustering pattern in unlabeled data", "A random relationship between unrelated variables", "A linear relationship between a dependent variable and independent variables"],a:3},
+  {q:"Which core concept defines Software-Defined Networking (SDN)?",o:["Hardwiring control logic into every switch", "Decoupling the control plane from the data plane", "Combining all network functions into a single monolithic server", "Eliminating the need for any software in networking"],a:1},
+  {q:"Fill in the blank. Fog computing architecture places fog nodes between ….. and the cloud.",o:["Industrial end devices", "Enterprise servers", "Mobile applications", "Databases"],a:0},
+  {q:"What is the major challenge in handling data from sensors and machines in IIoT?",o:["High cost of sensors", "Diversity in protocols, data syntax, and data sources", "Lack of storage capacity", "Insufficient processing power"],a:1},
+  {q:"State True or False. Fog computing in IIoT prevents unnecessary noisy big data crowd at the cloud.",o:["True", "False"],a:0},
+  {q:"State True or False. R is an open source tool for programming, statistical analysis, and graphics representation.",o:["True", "False"],a:0},
+  {q:"Which R package provides functions for fuzzy clustering, support vector machine, and naïve bayes classifier?",o:["rpart", "e1071", "nnet", "Caret"],a:1},
+  {q:"Fill in the blank. The basic service models provided by cloud computing include IaaS, PaaS, and ………..",o:["DaaS", "Naas", "SaaS", "Faas"],a:2},
+  {q:"Which Hadoop component is described as a module containing the utilities that support the other Hadoop components?",o:["HDFS", "MapReduce", "Hadoop Common", "YARN"],a:2},
+  {q:"What routing protocol does BCube run?",o:["BSR (Bcube Source Routing)", "BGP", "OSPF", "RIP"],a:0},
+  {q:"Which of the following is mentioned as a data center network challenge?",o:["High cost", "Poor server-to-server Connectivity", "Complex configuration", "Limited vendors"],a:1},
+  {q:"Which protocol is mentioned as part of SDN components?",o:["TCP", "UDP", "OpenFlow", "HTTP"],a:2},
+  {q:"State True or False. GCAM is used to place flow-rules in SDN forwarding devices, but it is limited in capacity.",o:["True", "False"],a:1},
+  {q:"Which advantage of SDIIoT enables events to be processed in order through deterministic forwarding of traffic?",o:["Deterministic networking", "High availability", "Low-latency virtualization", "Robust security"],a:0}
 ],
 10:[
-  {q:"The body in cyborg discourse is viewed as:",o:["A mechanically neutral system","A cultural site shaped by political and technological forces","A purely fictional metaphor","A fully post-gender evolutionary form"],a:1},
-  {q:"Balsamo's argument aligns with Foucault in suggesting that:",o:["Bodies exist outside ideology","Technology replaces the need for culture","Identity becomes irrelevant in discourse","Power shapes embodiment through discourse and regulation"],a:3},
-  {q:"The postmodern body (after Kroker) is viewed as:",o:["A purely biological truth","A culturally coded product of technology and media","A stable gender category","Separate from representation"],a:1},
-  {q:"Jardine warns feminism that:",o:["Essentialism cannot be challenged","Defining \"woman\" is politically necessary yet unstable","Technology destroys meaning","Identity must remain fixed"],a:1},
-  {q:"Florence Griffith Joyner's media portrayal reveals:",o:["Athleticism without gender framing","The erasure of femininity","A fetishized framing of women's athletic bodies","Neutral cultural representation"],a:2},
-  {q:"Balsamo argues female athletes should be:",o:["Returned to beauty standards","Removed from sports","Humanized rather than aestheticized","Reduced to symbolic icons"],a:2},
-  {q:"\"Cyberspace\" was popularized by:",o:["William Gibson","Donna Haraway","Jaron Lanier","Katherine Hayles"],a:0},
-  {q:"VR systems often recreate:",o:["Gender-neutral worlds","Revisionist and traditional gender expectations","Only biological reflection","Equality as default"],a:1},
-  {q:"Feminist technoculture argues bodies are shaped by:",o:["Purely medical practice","Economic models","Power, discourse, and technology","Natural law"],a:2},
-  {q:"Fiction matters in technoculture because it:",o:["Has no real-world impact","Distracts from theory","Helps conceptualize emerging techno-cultural realities","Rejects gender"],a:2}
+  {q:"What is the primary objective of the IETF 6TISCH protocol in the context of IIoT?",o:["To enable deterministic communication and efficient resource allocation", "To increase non-deterministic communication", "To replace SDN controllers entirely", "To increase jitter in the network"],a:0},
+  {q:"µSDN is integrated with which protocol stack?",o:["Zigbee stack", "IPv4 stack", "Contiki IEEE 802.15.4-2015 stack", "LTE stack"],a:2},
+  {q:"Fill in the blank. The public network in SDIIoT consists of switches, routers, and ……………. Network.",o:["Sensor", "Access", "Control", "Storage"],a:1},
+  {q:"State True or False. Trustworthy IIoT includes security, privacy, safety, reliability, and resilience.",o:["True", "False"],a:0},
+  {q:"Fill in the blank. Current security architectures are mostly…….. Centric.",o:["OT", "IT", "Cloud", "Device"],a:1},
+  {q:"Which of the following is the first step in IIoT security risk management?",o:["Mitigating risks", "Accepting risks", "Avoiding risks", "Outsourcing risks"],a:2},
+  {q:"Fill in the blank. Security of the whole IIoT system depends on deployed devices, communication security, data protection, and ……..",o:["Network topology", "Security management", "Sensor calibration", "Hardware redundancy"],a:1},
+  {q:"Fill in the blank. End device protection requires physical security, access control, identity, and …………. Protection.",o:["Application", "Network", "Cloud", "Data"],a:3},
+  {q:"What is the primary security requirement of IIoT systems?",o:["Device scalability", "End-to-end security", "High bandwidth", "Low latency"],a:1},
+  {q:"Which feature of a smart factory enables prediction of future outcomes?",o:["Transparent", "Connected", "Proactive", "Agile"],a:2},
+  {q:"Airbus uses which technology to visualize production processes in real time?",o:["Augmented Reality", "Blockchain visualization", "Virtual reality only", "3D real-time visualization"],a:3},
+  {q:"What technology does Amazon use to automate product search and retrieval in its warehouse?",o:["Automated conveyor belts", "Robotic shelves", "Augmented Reality devices", "Autonomous forklifts"],a:1},
+  {q:"What is the role of the sensing layer in IoT-enabled food supply chains?",o:["Data encryption", "Monitoring food quality using sensors", "Providing cloud analytics", "Managing business operations"],a:1},
+  {q:"What is one major benefit of supply chain transparency in the food industry?",o:["Increased manual intervention", "Reduced food wastage", "Reduced sensor usage", "Elimination of automation"],a:1},
+  {q:"What does the \"Flavor Matrix\" by Culinary Science Industries use to enhance dishes?",o:["Robot chefs", "Augmented Reality menus", "3D printed food", "Machine learning and data analysis of food ingredients"],a:3}
 ],
 11:[
-  {q:"Emily Cox-Palmer-White links gender to which broader theoretical framework?",o:["Existentialism","Biopolitics","Romanticism","Linguistic determinism"],a:1},
-  {q:"Which philosopher's concept of the \"paradigmatic system\" does White adapt to analyze gender?",o:["Jacques Derrida","Giorgio Agamben","Michel Foucault","Jean Baudrillard"],a:1},
-  {q:"In feminist SF, monstrous, hybrid bodies often serve to:",o:["Reaffirm essentialist gender categories","Function as metaphors questioning power and normativity","Represent technological failure","Eliminate feminist politics entirely"],a:1},
-  {q:"Biopolitics, in relation to gender, describes:",o:["How power manages bodies, reproduction, and identity","A neutral scientific method","A discussion unrelated to technology","A metaphor used only in fiction"],a:0},
-  {q:"Cybernetic identities challenge:",o:["Neutrality and fixed bodily categories","The possibility of identity","All forms of feminist thinking","Representational politics entirely"],a:0},
-  {q:"Posthuman subjectivity is marked by:",o:["A stable coherent self","A fragmented identity shaped by networks and code","A rejection of all embodiment","A purely biological understanding of life"],a:1},
-  {q:"Posthuman feminist ethics emphasizes:",o:["Only human-centered care","Entanglements among humans, technology, and environments","The separation of body and machine","Neutrality in knowledge"],a:1},
-  {q:"Rosi Braidotti's work argues identity is:",o:["A fixed universal category","Nomadic, relational, and becoming","Removed from politics","Determined solely by biology"],a:1},
-  {q:"The \"future body\" imagined in feminist technoculture is:",o:["Passive and neutral","Hybrid, relational, and still politically contested","Free of discourse","Technologically identical everywhere"],a:1},
-  {q:"Critical engagement with technology requires:",o:["Blind adoption of innovation","Ignoring history and politics","Reflexivity and accountability","Reduction of ethics"],a:2}
+  {q:"In the context of the IIoT Healthcare Architecture, which process immediately follows \"Sensing\"?",o:["Learning", "Storing", "Sending", "Processing"],a:2},
+  {q:"State True or False: Asthma is a lifelong disease that can be completely cured using IIoT-based smart inhalers.",o:["True", "False"],a:1},
+  {q:"Which of the following is given as an example of a wireless ECG monitoring device?",o:["iHealth BP5", "Dexcom", "QardioCore", "Kinsa smart thermometer"],a:2},
+  {q:"State True or False: In Advanced Metering Infrastructure (AMI), Broadband over PowerLine and Fixed radio frequency are used for communication networks.",o:["True", "False"],a:0},
+  {q:"Which specific issue can IoT predict in the water sector besides tracking water pressure and water quality?",o:["Water freezing points", "Exact rainwater volume", "Water leakage", "New underground water sources"],a:2},
+  {q:"How does a digital power plant reduce costs?",o:["By increasing manpower", "By increasing fuel consumption", "By using manual monitoring", "By utilizing automated devices reducing the need for manpower and maintenance"],a:3},
+  {q:"Which type of RFID tag relies on backscattering and has no internal power source?",o:["Active RFID", "Passive RFID", "Battery-Assisted Passive RFID", "Hybrid RFID"],a:1},
+  {q:"Which of the following is considered a primary Function of Inventory Management?",o:["Increasing data scattering", "Decoupling components of the production-distribution system", "Broadcasting information signals", "Creating additional noise"],a:1},
+  {q:"Fill in the blank. Quality Control is defined as a system of routine technical activities to measure and control the quality of the inventory as it is being ………….",o:["Developed", "Transported to retail", "Sold to the customer", "Disposed of"],a:0},
+  {q:"Fill in the blank. The Intrusion Triangle consists of Opportunity, Means, and ………….",o:["Integrity", "Motive", "Availability", "Authentication"],a:1},
+  {q:"Which Software Security concept is responsible for the verification of credentials entered locally or remotely?",o:["Integrity", "Authentication", "Availability", "Network segmentation"],a:1},
+  {q:"Which type of Network Security specifically scans for malware detection and prevention?",o:["Access control", "Application security", "Behavioral analytics", "Antivirus/antimalware software"],a:3},
+  {q:"According to the Facilities Management Good Practice Guide, what does Facility Management manage on behalf of property owners?",o:["Factory assembly lines", "Buildings, precincts, community infrastructure", "Cloud computing servers", "Retail supply chains"],a:1},
+  {q:"State True or False: In the scope of IoT in Facility Management, implementing new technology includes Light Fidelity (Li-Fi) and data security.",o:["True", "False"],a:0},
+  {q:"Which support service focuses on researching potential customers?",o:["Administrative Support", "Marketing", "Business Development", "Information Technology"],a:1}
 ],
 12:[
-  {q:"Which theorist is associated with the concept of the cyborg in feminist posthumanism?",o:["Judith Butler","Donna Haraway","Gayatri Spivak","Audre Lorde"],a:1},
-  {q:"Ihab Hassan's 1977 work is significant because it:",o:["Rejects technology","Announces a posthumanist cultural shift","Reinforces classical humanities","Focuses only on gender"],a:1},
-  {q:"Haraway's cyborg challenges which traditional binary?",o:["Past vs future","Human vs machine","Nature vs evolution","Emotion vs logic"],a:1},
-  {q:"The cyborg represents:",o:["A world free of technological influence","A post-gender figuration","A return to traditional identity","A rejection of feminist politics"],a:1},
-  {q:"Ava in <em>Ex Machina</em> is primarily analyzed as:",o:["A purely mechanical invention","A cyborg/gynoid with consciousness","A human disguised as machine","A villain with no agency"],a:1},
-  {q:"Nathan's role in Ava's creation in <em>Ex Machina</em> symbolizes:",o:["Equal partnership","Toxic masculine control","Post-gender equilibrium","Democratic engineering"],a:1},
-  {q:"Braidotti critiques which long-standing framework?",o:["Anthropocentric humanism","Ecocriticism","Structural linguistics","Marxist economics"],a:0},
-  {q:"The nomadic subject emphasizes:",o:["Fixed identity","Fluid, relational identity","Religious unity","Pure biological ancestry"],a:1},
-  {q:"Which form of violence significantly increased during lockdowns?",o:["Sports-based violence","Animal cruelty","Climate-related conflict","Domestic and gender-based violence"],a:3},
-  {q:"Reid and Ritholtz argue LGBTQ+ individuals were treated as:",o:["Protected citizens","Technological threats","A disposable category","Political leaders"],a:2}
+  {q:"In the Oil and Gas Industry Work-flow, which step immediately precedes the data moving to a cloud-based analytics platform?",o:["Deploy IoT solutions", "Apply predictive analytics", "Data analysis by extraction, transform and load", "Identify required maintenance"],a:2},
+  {q:"State True or False: In the Machine Learning and Cloud Services work-flow, identifying specific data types occurs after analyzing and evaluating data.",o:["True", "False"],a:0},
+  {q:"In the Chemical Industry, what is a primary goal of Predictive Maintenance?",o:["Address real time issues", "Track vehicle locations", "Increase energy usage", "Optimize medicine routing"],a:0},
+  {q:"Which of the following actions is part of \"Improve Logistics\" in the Chemical Industry?",o:["Analyzing water and nutrients", "Detection of contamination or attacks", "Pricing model with profit margin", "Reducing equipment breakdown"],a:1},
+  {q:"Fill in the blank. IoT applications in the Pharmaceutical Industry are deployed to connect different technologies including manufacturing, monitoring, controlling, and…..",o:["Distribution", "Farming", "Extraction", "Refining"],a:0},
+  {q:"How do UAVs typically communicate with industrial systems?",o:["Through handwritten notes", "Through SCADA systems", "Via wired connections only", "They do not communicate with industrial systems"],a:1},
+  {q:"The ………… generation of UAV technology features transformable designs with 360° gimbals, high quality video, and improved piloting modes.",o:["Third", "Fourth", "Fifth", "Sixth"],a:2},
+  {q:"Which of the following is an application of UAVs in Energy Management?",o:["Resisting deforestation", "Inspecting large boiler at power plants", "Delivery of defibrillators", "Broadcasting live events"],a:1},
+  {q:"In the mining industry, regular surface surveys by UAVs are primarily used for:",o:["Watershed analysis", "Canopy mapping", "Finding missing items", "Optimized blast design"],a:3},
+  {q:"Fill in the blank. In the Healthcare sector, research is being done on drones with………. that can help the senior population.",o:["Manipulator arms", "Defibrillators", "Thermal imagery", "360° gimbals"],a:0},
+  {q:"How do UAVs specifically assist in testing networks within the Telecommunication sector?",o:["By broadcasting live events", "By providing internet services to urban areas", "By monitoring construction sites", "By testing network coverage and stability"],a:3},
+  {q:"Fill in the blank. A case study enables a researcher to closely examine the data within a…..",o:["Broad universal scope", "Specific context", "Simulated testing environment", "Purely hypothetical scenario"],a:1},
+  {q:"State True or False: Case studies are limited to providing only qualitative analysis of the data.",o:["True", "False"],a:1},
+  {q:"Fill in the blank. A key point to ponder for all case studies is the reduction of……… of workers.",o:["Mandatory work hours", "Annual paid leaves", "Technical training costs", "Health hazards"],a:3},
+  {q:"What do case studies explore and investigate through detailed analysis?",o:["Real-life phenomenon", "Purely fictional events", "Ancient historical myths", "Unknown future predictions"],a:0}
+]
+};
+
+
+const DATA_PY = {
+1:[
+  {q:"Which sensor system type is characterized by an output that oscillates before reaching steady state?",o:["Zero order system", "First order system", "Second order system", "Linear system"],a:2},
+  {q:"Which of the following is NOT a correct example of a transducer?",o:["Microphone", "Wire", "Speaker", "Antenna"],a:1},
+  {q:"The response of which of the following sensors depends on the magnitude of the direction and orientation of input parameter?",o:["Scalar sensor", "Passive sensor", "Analog sensor", "Vector sensor"],a:3},
+  {q:"Which type of Zigbee node is responsible for network initialization and maintenance?",o:["Router", "End Device", "Coordinator", "Sensor"],a:2},
+  {q:"Which two layers does IEEE 802.15.4 provide a framework for?",o:["MAC and PHY", "IP and TCP", "HTTP and SSL", "FTP and DNS"],a:0},
+  {q:"How often are time slots allocated in Wireless HART?",o:["1 per second", "10ms per slot", "100ms per slot", "1 second per device"],a:1},
+  {q:"How do passive RFID tags operate?",o:["Use an internal battery", "Use an external solar panel", "Are powered by the reader inductively", "Are manually activated"],a:2},
+  {q:"Bluetooth technology is based on which type of networking?",o:["Mesh", "Piconet (Ad-hoc)", "Star", "Bus"],a:1},
+  {q:"What process is used by Z-wave to bypass radio dead spots?",o:["Network Slicing", "Subnetting", "Healing", "Network Partitioning"],a:2},
+  {q:"Which of the following best represents the 'trunk' in the IoT analogy?",o:["ARM (Architectural Reference Model)", "IoT applications", "Communication protocols", "End-user interfaces"],a:0},
+  {q:"What is the function of the Registration Interface (RI) in CoRE?",o:["Processes user login", "Assigns MAC addresses", "Encrypts transmitted data", "Registers IoT resources to the directory"],a:3},
+  {q:"Which of the following is not a message type in CoAP?",o:["CON", "NON", "RST", "ECHO"],a:3},
+  {q:"Which of the following is an IP-based solution proposed by IETF for IoT?",o:["Zigbee Alliance", "Bluetooth SIG", "CoRE", "Wi-Fi Alliance"],a:2},
+  {q:"State true or false. Sensor calibration is typically used for weeding-out repeatable errors in sensor readings.",o:["True", "False"],a:0},
+  {q:"Which of the following is NOT true about WirelessHART?",o:["It is a license-free protocol", "It is not compatible with any legacy devices", "WirelessHART uses the IEEE 802.15.4 standard for its protocols designing", "WirelessHART makes device placements more accessible and cheaper"],a:1}
+],
+2:[
+  {q:"Which technological innovation drove the First Industrial Revolution?",o:["Electricity and the assembly line", "Invention of steam engine and construction of railways", "Semiconductor fabrication techniques", "Artificial Intelligence and Cyber-Physical Systems"],a:1},
+  {q:"Which of the following sectors is considered as the conventional application area for robots?",o:["Automotive industry", "Precision agriculture", "Nursing", "Space exploration"],a:0},
+  {q:"Fill in the blanks. A depression, compared to a recession, is characterized by ________________________.",o:["Increased investment in manufacturing", "Shorter duration of economic hardship", "Lower unemployment rates", "Higher levels of economic damage and longer duration"],a:3},
+  {q:"In a manufacturing industry, which system is described as the \"main nervous system\"?",o:["Supply-Chain Management (SCM)", "Information and Communication Technology (ICT)", "Energy-price monitoring", "Human-resources planning"],a:1},
+  {q:"Fill in the blanks. Emerging markets are expected to be found primarily in .",o:["Developed countries", "Developing countries", "Polar regions", "Nations with zero population growth"],a:1},
+  {q:"Which of the following is a key feature of Lean production approach?",o:["It emphasizes automation over manual labor", "It focuses solely on financial outcomes", "It considers the customer's perspective", "It aims to increase inventory levels"],a:2},
+  {q:"Alongside Jidoka, Lean production is founded on which second pillar?",o:["Kaizen", "Just-in-Time", "Kanban", "Total Productive Maintenance"],a:1},
+  {q:"What is the first step in the \"5 steps of walking a value stream\"?",o:["Build a leadership team", "Walk it – discuss value and list ideas", "Focus on a single value stream", "Schedule follow-up"],a:2},
+  {q:"What is included among the fundamental building blocks of a smart business model?",o:["Marketing campaigns", "Customer values and key processes", "Warehouse locations", "Stock exchange metrics"],a:1},
+  {q:"Which of the following represents the key attributes of a smart business model?",o:["Value proposition", "Revenue streams", "Technologies", "All of these"],a:3},
+  {q:"Fill in the blanks. Big Data analytics in smart factories can help with_________________.",o:["Generating knowledge", "Reducing data storage", "Eliminating sensors", "Increasing manual paperwork"],a:0},
+  {q:"Why are smart factories increasingly necessary in today's industry?",o:["They reduce the number of products needed", "They support rigid, static manufacturing systems", "They help achieve high production in less time with reduced risks of failure", "They operate only in low-demand markets"],a:2},
+  {q:"State True or False. Smart Grid is considered as a supporting technology for Smart Factories.",o:["True", "False"],a:0},
+  {q:"Timely delivery and reliability are highlighted within sustainability under which supply-related concept?",o:["Supply-Chain Management loop", "Single-sourcing", "Random demand generation", "Personal mail delivery"],a:0},
+  {q:"State True or False. Industry 4.0 is commonly referred to as the fourth industrial revolution pertaining to digitization in the manufacturing industry.",o:["True", "False"],a:0}
+],
+3:[
+  {q:"What distinguishes CPS from traditional embedded systems?",o:["CPS are always smaller in size", "CPS have limited computational power", "CPS are networked set of embedded systems and not resource-constrained", "CPS rely solely on manual controls"],a:2},
+  {q:"Fill in the blanks. Reactive Computation, as a feature of Cyber-Physical Systems, primarily involves .",o:["Performing computations only when explicitly commanded by a user.", "Interacting with the environment in an ongoing manner through observed inputs and outputs.", "Executing a fixed set of operations without external influence.", "Storing large amounts of data for later analysis."],a:1},
+  {q:"A smart traffic management system that monitors traffic signals and cameras in real-time to optimize traffic flow and provide transit signal priority for emergency vehicles is an example of CPS application in which domain?",o:["Healthcare", "Smart Grid", "Transportation", "Industry"],a:2},
+  {q:"Which of the following are the four key parts that enable collaboration productivity in Industry 4.0?",o:["IT Proliferation, Single Source of Truth, Industrialization, Coordination", "Hardware, Software, Networks, People", "Planning, Execution, Monitoring, Control", "Design, Development, Testing, Deployment"],a:0},
+  {q:"What is identified as a major challenge for PLM in Industry 4.0?",o:["Lack of skilled workers", "High energy consumption", "Short product lifecycle and increasing outsourcing", "Limited internet connectivity"],a:2},
+  {q:"How does Augmented Reality (AR) function in a user's environment?",o:["Replaces the real world with a fictional setting", "Adds digital elements into the actual environment", "Creates a full simulation with no real-world connection", "Only uses audio input"],a:1},
+  {q:"Which sensor modalities are supported by Augmented Reality?",o:["Auditory only", "Tactile only", "Visual, auditory, and haptic", "Taste and smell"],a:2},
+  {q:"According to Patterson, what is Artificial Intelligence (AI)?",o:["Deals with studying and creation of computer systems exhibiting some form of intelligent behavior", "A method of transmitting wireless data", "A system that replicates human hardware", "A mechanical replacement for programming languages"],a:0},
+  {q:"Which of the following is NOT listed as a scope of AI?",o:["Games", "Data Entry", "Natural Language Processing (NLP)", "Robotics"],a:1},
+  {q:"Which of the following is listed as a challenge of AI in IIoT?",o:["Increasing efficiency", "Saving costs", "Understanding data", "Boosting resources"],a:2},
+  {q:"The statement ”Data whose meaning is constantly changing” best describes which characteristic of Big Data?",o:["Variety", "Veracity", "Variability", "Visualization"],a:2},
+  {q:"Which of the following is a notable distributed file system derived from the open-source codes of GFS, mentioned in the context of Big Data storage?",o:["HDFS", "NoSQL", "SQL", "RDBMS"],a:0},
+  {q:"Why are traditional Data Warehouse (DW) architectures generally not suitable for Big Data applications?",o:["They are designed for unstructured data.", "They lack the ability to perform parallel processing.", "They cannot handle the characteristics that Big Data possess, requiring distributed, parallel performing, scale-out frameworks", "They are too expensive for Big Data"],a:2},
+  {q:"Fill in the blanks. [blank] acts as the interface for the different applications during the entire lifecycle management of the product.",o:["Product Lifecycle Management", "Customer Relationship Management", "Enterprise Resource Planning", "Manufacturing Execution System"],a:0},
+  {q:"Which of the following statements is incorrect about Big Data?",o:["Big data analytics can process real-time data from IoT devices and store them using various storage schemes.", "Big data consists only of structured datasets generated by IoT applications.", "The classification of data as big data depends on characteristics such as volume, variety, value, velocity, and veracity.", "Big data can be used to analyze patterns in network behavior, customer experiences, and connectivity issues."],a:1}
+],
+4:[
+  {q:"Which of the following components of cybersecurity focuses on maintaining the availability, integrity, and confidentiality of business data?",o:["Network Security", "Operational Security", "Information Security", "End-user Education"],a:2},
+  {q:"Network security combines multiple layers of defenses at which locations?",o:["At the edge and in the network.", "Only within the network’s core.", "Only at the edge of the network.", "At individual user devices only"],a:0},
+  {q:"Why are IIoT Security Standards required, especially when diverse systems and equipment are integrated on a smart factory floor?",o:["To reduce the cost of implementing IIoT.", "Because leaving security to individual IIoT implementers is dangerous and every weak line puts the whole factory at risk.", "To ensure that only new systems are implemented, not legacy ones.", "To increase the complexity of the smart factory floor."],a:1},
+  {q:"In IIoT, where are sensors and actuators primarily used compared to traditional automation?",o:["Only for critical elements", "Almost everywhere to control, enhance, and optimize various functions", "Exclusively for emergency systems", "To replace human operators entirely"],a:1},
+  {q:"In the mining industry, how do sensor networks with gas sensors, strata monitoring devices, and RFID tags contribute to safety and efficiency?",o:["They only help in tracking miners’ locations.", "They are primarily used for communication between miners.", "They replace the need for human inspection.", "They provide early disaster warning, monitor working conditions, and help locate miners."],a:3},
+  {q:"Who coined the term ”Industrial Internet”?",o:["IBM", "General Electric (GE)", "Intel", "Siemens"],a:1},
+  {q:"What are the three key elements of the Industrial Internet?",o:["Big Data, Cloud, and AI", "Intelligent Machines, Advanced Analytics, People at Work", "Sensors, Processors, and Actuators", "Software, Hardware, and Middleware"],a:1},
+  {q:"In a milk packaging unit, how is flow measured?",o:["Using a thermometer", "Via a spinning impeller that sends signals when milk flows", "With a smart camera", "Using a GPS module"],a:1},
+  {q:"Which component is responsible for converting analog data to digital data in a smart sensor node?",o:["Processor", "Memory", "ADC", "DAC"],a:2},
+  {q:"In the context of the agriculture industry, what is the primary use of smart sensors like soil and water sensors?",o:["To track real-time objects.", "To predict driver destinations.", "To prevent patient falls in hospitals.", "For accurate use of fertilizers and determining crop health."],a:3},
+  {q:"Fill in the blanks. Thames Water’s smart water management system, as an example of Industrial Process 4.0 operation efficiency, primarily benefits from_________________ .",o:["Data monetization and pay-per-use models.", "Sensor-based equipment status monitoring and failure detection.", "Augmented Reality-based problem diagnosis.", "Controlled power generation using weather forecasts."],a:1},
+  {q:"Fill in the blanks. Interoperability in the design philosophy of IIoT for Industrial Processes refers to ___________________ .",o:["Empowering smart objects to reduce human intervention.", "Facilitating communication between heterogeneous objects.", "Virtualization of objects and digital models.", "Enabling smart objects to take independent decisions."],a:1},
+  {q:"In the 5C architecture of Cyber-Physical Systems, what does the ”Conversion Layer” do?",o:["Interprets sensors data for information", "Stores backup data", "Converts analog signal to mechanical action", "Synchronizes robotic arms"],a:0},
+  {q:"State true or false. In the case of spear phishing, the attackers send thousands of deceitful emails that resemble actual emails from credible sources while email phishing attacks are targeted to a specific person or organization to obtain sensitive information.",o:["True", "False"],a:1},
+  {q:"Which of the following statements is incorrect about the CIA triad in network and computer system security?",o:["Confidentiality ensures that information is concealed and protected from unauthorized access.", "Integrity refers to maintaining the accuracy and consistency of data, and can always be violated by intentional attacks.", "Availability is compromised when authorized users are denied access to information due to network attacks like DDoS.", "None of these"],a:1}
+],
+5:[
+  {q:"According to the ICP DAS framework for Industry 4.0, under which category does “System health diagnosis” fall?",o:["Energy", "Safety", "M2M", "Manufacturing"],a:3},
+  {q:"Kaeser Kompressoren coined a new term for their service-based business model, in which users pay per cubic meter of compressed air used. What is this model called?",o:["Renting Model", "Selling Model", "Subscription Model", "Air-as-a-Service"],a:3},
+  {q:"Which company is highlighted for its use of smart glasses for fault detection in its manufacturing process?",o:["KUKA", "Maersk", "Boeing", "Cisco"],a:2},
+  {q:"What is a business model as defined by the “Business Model Generation” book?",o:["The organizational and financial architecture of a business", "The rationale of how an organization creates, delivers, and captures value", "A description of how a business intends to earn profits", "The network of suppliers and partners that optimize a business"],a:1},
+  {q:"Which IoT business model relieves the customer from the responsibilities of ownership and maintenance, focusing on a “Pay-per-outcome” approach?",o:["Subscription Model", "Asset-Sharing Model", "Outcome-Based Model", "IoT-as-a-Service"],a:2},
+  {q:"In a Cloud-Based Business Model, how do customers typically access services?",o:["By outright purchase", "By manual installation", "Via government funding", "Through temporary leasing of resources"],a:3},
+  {q:"What is the primary purpose of the revenue model in Service-Oriented Business Models in IIoT?",o:["Only subscription fees", "Physical sales", "Monetization of collected data", "Rental income"],a:2},
+  {q:"Which type of Cloud-Based Business Model aims at providing the required hardware and software online in the cloud?",o:["Software-as-a-Service (SaaS)", "Platform-as-a-Service (PaaS)", "Infrastructure-as-a-Service (IaaS)", "Business-as-a-Service (BaaS)"],a:2},
+  {q:"What is the purpose of the Industrial Internet Reference Architecture (IIRA)?",o:["Allowing interoperability and guiding IIoT technologies", "Reducing network speed", "Designing personal computer systems", "Building only mobile applications"],a:0},
+  {q:"An IIoT product is being tested in different continents for performance, standardization, and interoperability before its release. Which organization is most likely facilitating this?",o:["IEEE", "Industrial Internet Consortium (IIC)", "ISO", "NIST"],a:1},
+  {q:"Which of the following is an example of a Lagging KPI for OSH?",o:["Frequency of observed unsafe behaviour", "Number of OSH audits", "Number of lost-time incident frequency rate", "Percentage of managers with adequate OSH training"],a:2},
+  {q:"In the usage Viewpoint, which element of an Activity defines the conditions under which the activity is initiated?",o:["Workflow", "Effects", "Constraints", "Trigger"],a:3},
+  {q:"In the context of the Usage Viewpoint of the Industrial Internet Reference Architecture (IIRA), what is considered the basic unit of work?",o:["System", "Network", "Component", "Task"],a:3},
+  {q:"Which of the following represents key feature(s) of the process-oriented business model?",o:["Execution of various business processes within the organization", "Presence of process owners to supervise the processes", "Evaluation of process performance", "All of these"],a:3},
+  {q:"Fill in the blanks.__________________ is an electrical framework that provides two-way communication between the consumers and suppliers. With the help of smart meters, smart appliances, and energy-efficient resources, it efficiently delivers electricity to the consumers.",o:["Smart grid", "Load Balancer", "Railway Signaling System", "None of these"],a:0}
+],
+6:[
+  {q:"In the diagram for the manufacturing process, which unit comes immediately after the \"Quality Testing Unit\"?",o:["Packaging Unit", "Production Unit", "Product Counting Unit", "Transporting Unit"],a:2},
+  {q:"The analog temperature sensor LM35 generates an output voltage that is linearly proportional to what temperature scale?",o:["Fahrenheit", "Kelvin", "Celsius", "Rankine"],a:2},
+  {q:"The MQ-2 gas sensor is specifically mentioned to detect the concentration of which gases?",o:["Oxygen, Nitrogen, and Carbon Dioxide", "LPG, propane, and hydrogen", "Methane, Ammonia, and Carbon Monoxide", "Ozone, Sulfur Dioxide, and Nitrous Oxide"],a:1},
+  {q:"What happens to the resistance of an n-type MOS sensor when it is exposed to a reducing gas?",o:["It increases with respect to the Baseline resistance", "It decreases with respect to the Baseline resistance", "It remains unchanged", "It fluctuates randomly"],a:1},
+  {q:"According to the working principle of MOS gas sensors, what is the \"Optimum Temperature\"?",o:["The maximum temperature the sensor can withstand", "The minimum temperature required for operation", "The particular temperature at which the sensor gives the best response", "The temperature of the surrounding environment"],a:2},
+  {q:"ModBus-TCP uses which protocol suite for data transmission?",o:["RS-232", "TCP/IP & Ethernet", "CAN", "IEEE 802.15.4"],a:1},
+  {q:"What does the acronym EtherCAT stand for?",o:["Ethernet Control and Transmission", "Ethernet Common Automation Technology", "Ethernet Control Automation Technology", "Ethernet Communication and Telemetry"],a:2},
+  {q:"In the ModBus-TCP data frame, what is the name of the 7-byte header that identifies the Application Data Unit (ADU)?",o:["TCP Header", "PDU Header", "MBAP (MODBUS Application Protocol) header", "Ethernet Header"],a:2},
+  {q:"Which variant of CC-Link offers the highest transmission rate of 1 Gbps?",o:["Standard CC-Link", "CC-Link LT", "CC-Link Safety", "CC-Link IE (Industrial Ethernet)"],a:3},
+  {q:"Profibus is based on which international standard?",o:["IEC 61158", "IEEE 802.3", "ISO 9001", "IEC 61850"],a:0},
+  {q:"What is the Availability requirement for uRLLC?",o:["90% availability", "99% availability", "99.9999% availability (6-nines)", "50% availability"],a:2},
+  {q:"What is the end-to-end round trip latency supported by the Tactile Internet?",o:["< 10 ms", "< 1 ms", "< 100 ms", "< 250 ms"],a:1},
+  {q:"Which frequency bands are used by 5G NR?",o:["Only below 1 GHz", "Low band (< 1 GHz), middle band (1-6 GHz), and high band (>24 GHz) millimeter wave", "Only Wi-Fi bands", "Satellite communication bands"],a:1},
+  {q:"State true or false. The PROFINet protocol handles data transmission of large packets between PLCs and PCs, as well as enable integration with the Internet and Intranet through Ethernet.",o:["True", "False"],a:0},
+  {q:"Fill in the blanks. DeviceNet was designed by Rockwell Automation to enable communications between and .",o:["PLCs, field devices", "PLCs, human–machine interfaces (HMIs)", "Routers, enterprise servers", "SCADA systems, cloud platforms"],a:0}
+],
+7:[
+  {q:"Which modulation technique does LoRa use?",o:["Amplitude Modulation", "Frequency Modulation", "Chirp Spread Spectrum", "Time Division Multiplexing"],a:2},
+  {q:"Fill in the blanks. SIGFOX network give a performance of upto ____________ messages per day with a payload of ___________ bytes per message.",o:["140, 12", "50, 2", "60, 3", "100, 10"],a:0},
+  {q:"What is the key difference between a Zigbee Router and a Zigbee End Device?",o:["A router can relay information to other nodes, while an end device cannot.", "An end device is the root of the network, while a router is not.", "A router can only connect to a coordinator, while an end device can connect to any node.", "There is no functional difference between them."],a:0},
+  {q:"What software tool is used to configure Xbee modules before communication?",o:["Arduino IDE", "Python", "XCTU", "Wireshark"],a:2},
+  {q:"Which characteristic of IIoT data refers to the fact that it comes from heterogeneous sensors with different metrics, precision, and formats?",o:["Real-time", "Dynamic heterogeneity", "Polymorphism", "Correlation"],a:1},
+  {q:"What is the role of middleware in an IIoT system?",o:["It is the physical hardware layer of sensors and actuators.", "It is the final user-facing application.", "It is the communication protocol for data transfer.", "It is a software layer between the infrastructure and application layers that provides services and supports heterogeneity."],a:3},
+  {q:"Which type of analytics answers the question, \"What will happen and why?\"",o:["Predictive", "Descriptive", "Diagnostic", "Prescriptive"],a:0},
+  {q:"Which type of analytics aims to determine the best possible business decision?",o:["Predictive", "Descriptive", "Diagnostic", "Prescriptive"],a:3},
+  {q:"What is the primary goal of the FarmBeats platform?",o:["To manage smart city infrastructure", "To enable data-driven precision agriculture", "To automate cognitive manufacturing", "To monitor the health of vineyards"],a:1},
+  {q:"In the iRobot-Factory architecture, which component is responsible for cloud-based, high-performance, long-term data analytics using AI?",o:["Intelligent Terminal", "Cognitive Engine", "Edge Computing Node", "Intelligent Device Unit"],a:1},
+  {q:"In an Industrial Control System, what are the \"Set Points\"?",o:["The standard values of process parameters for controlled operation", "The values of process parameters measured by sensors", "The process variables that are modified by the controller", "The final output of the industrial process"],a:0},
+  {q:"Which of the following best describes a Closed Loop (Feedback) Control system?",o:["The control decision is made without considering the process variable", "It operates independently of the measured output", "The control decision depends on the measured value of the process variable", "It is not used in industrial automation"],a:2},
+  {q:"Fill in the blanks. Programmable Logic Controllers (PLCs) comprises of.______________.",o:["Processor unit, memory unit, power supply and communication modules", "Sensor array, signal generator, analog filter, and PLC terminal", "Actuator controller, logic gate module, and cooling system", "Voltage regulator, touchscreen unit, hard disk, and keyboard interface"],a:0},
+  {q:"Which of the following statements about the DHT sensor in IoT applications is correct?",o:["It measures only temperature and requires no external library.", "It measures both humidity and temperature, and Adafruit provides a dedicated library for its use.", "It measures pressure and temperature using built-in Python functions.", "It measures humidity only and is used exclusively for industrial automation and does not need external support."],a:1},
+  {q:"Which of the following best describes the role of a SCADA system in industrial processes?",o:["It is only a hardware-based system for controlling pumps and valves locally.", "It enables real-time remote monitoring and control of industrial processes using sensors and actuators, with data visualization through HMI.", "It is a vendor-specific communication protocol designed only for power plants.", "It functions as a replacement for PLCs without data logging or visualization features."],a:1}
+],
+8:[
+  {q:"What is the goal of prognostic analytics in IIoT?",o:["Identify root cause of an anomaly", "Inform about remaining useful life of an asset", "Detect real-time behavior", "Filter low-quality data"],a:1},
+  {q:"What are the three types of IIoT Analytics?",o:["Logical, Statistical, and Neural", "Predictive, Adaptive, and Reactive", "Descriptive, Predictive, and Prescriptive", "Linear, Non-linear, and Mixed"],a:2},
+  {q:"What is a key difference between the process of Machine Learning and Deep Learning?",o:["Machine Learning uses neural networks, while Deep Learning does not.", "Deep Learning requires the \"Feature extraction\" step, while Machine Learning does not.", "Machine Learning requires manual feature extraction, while Deep Learning learns features automatically.", "Deep Learning is a type of unsupervised learning only"],a:2},
+  {q:"According to the Venn diagram, Data Science is the intersection of Computer Science, Domain Expertise, and what other field?",o:["Mathematics and Statistical Research", "Mechanical Engineering", "Business Management", "Psychology"],a:0},
+  {q:"Supervised learning is divided into two main types of problems. What are they?",o:["Clustering and Association", "K-Means and Fuzzy c-Means", "State and Action", "Regression and Classification"],a:3},
+  {q:"In Reinforcement Learning, what does an \"agent\" learn from?",o:["An environment by taking actions and receiving rewards or penalties", "An unlabeled dataset with hidden patterns", "A labeled dataset provided by a supervisor", "A set of predefined rules"],a:0},
+  {q:"How does the performance of Deep Learning typically compare to traditional Machine Learning as the amount of data increases?",o:["The performance of both levels off at the same point.", "Traditional ML performance continues to improve, while DL performance levels off", "DL performance often continues to improve with more data, while traditional ML performance may level off.", "Both show decreased performance with more data"],a:2},
+  {q:"The deep learning concept of breaking a complex task into simpler tasks follows what principle?",o:["A nested hierarchy of concepts", "A linear regression model", "Random decision making", "A last-in, first-out stack"],a:0},
+  {q:"Which of the following statements about MindSphere is false?",o:["It is a cloud-based operating system platform for IoT.", "It offers enterprise-oriented solutions.", "It is an open platform-as-a-service that integrates with AWS.", "It is a mobile app used only for home automation."],a:3},
+  {q:"What is a major reason for needing cloud computing in IIoT?",o:["To decrease the number of connected devices.", "To handle the huge amount of unorganized and heterogeneous data, including data from M2M sensors.", "To ensure all data has the same quality.", "To reduce the need for networking"],a:1},
+  {q:"Which IIoT platform, offered by a software firm, provides a storage service called C3 Data Lake for unstructured data?",o:["GE Predix", "Siemens MindSphere", "C3 IoT", "Uptake"],a:2},
+  {q:"Which of the following is a characteristic of a good SLA?",o:["Vague and unmeasurable", "Unachievable", "Uncontrollable", "Quantifiable and Mutually Acceptable"],a:3},
+  {q:"Which of the following represents the characteristics of a good SLA?",o:["Affordable", "Achievable", "Quantifiable", "All of these"],a:3},
+  {q:"State true or false. Based on the application type, two popular types of deep learning methods are convolutional neural networks (CNNs) and recurrent neural networks (RNNs).",o:["True", "False"],a:0},
+  {q:"Which of the following are the key characteristics that classify data as Big Data in IoT applications?",o:["Accuracy, redundancy, scalability, latency, security", "Volume, variety, value, velocity, veracity", "Throughput, delay, integrity, topology, clustering", "Capacity, compatibility, complexity, connectivity, coverage"],a:1}
+],
+9:[
+  {q:"In the Fog Computing architecture for IIoT, where are the Fog Devices located?",o:["Above the Cloud layer.", "Between the Cloud and the Industrial End Devices.", "As part of the Industrial End Devices.", "Inside the Cloud."],a:1},
+  {q:"Which of the following is not a fog platform provider?",o:["FogHorn", "Nebbiolo Technologies", "Crosser", "Sony"],a:3},
+  {q:"Which command in R programming is used to see the list of reserved words like \"if\", \"else\", \"TRUE\", and \"NULL\"?",o:["?reserved", "list.reserved()", "show.words()", "getKeywords()"],a:0},
+  {q:"What is the result of the following expression in R programming, if N is a vector containing integers from 1 to 10? 15 %in% N",o:["TRUE", "1", "FALSE", "An error"],a:2},
+  {q:"Which of the following is NOT a data structure in Julia programming?",o:["Tuples", "Dictionary", "Coroutine", "Arrays"],a:2},
+  {q:"Which of the following does NOT fall under the essential characteristics of cloud computing according to NIST?",o:["On-demand self-service", "Broad network access", "Resource pooling", "Manual server configuration"],a:3},
+  {q:"Which of the following does NOT represent a NoSQL database?",o:["Key-value databases", "Column-oriented databases", "Document-oriented databases", "Relational databases"],a:3},
+  {q:"State true or false. In Hadoop Distributed File System (HDFS), the Namenode stores the actual data blocks, while Datanodes maintain the metadata information about the files.",o:["True", "False"],a:1},
+  {q:"Which property of a DCN refers to its ability to support any service on any server at any time?",o:["Security", "Reliability", "Scalability", "Agility"],a:3},
+  {q:"What is the main architectural difference between the DCell/BCube topologies and the traditional Three-Tier topology?",o:["DCell and BCube are server-centric, providing better scalability and fault tolerance.", "DCell and BCube are switch-centric, while the Three-Tier topology is servercentric.", "DCell and BCube use a single core switch, creating a single point of failure.", "The Three-Tier topology provides better server-to-server bandwidth."],a:0},
+  {q:"What is the core principle of a Software-Defined Data Center (SDDC)?",o:["All hardware must be from a single vendor.", "The data center infrastructure is virtualized and abstracted from the underlying hardware.", "The control and data planes are tightly coupled within the hardware.", "It relies on manual configuration for all provisioning and operations."],a:1},
+  {q:"In the SDN architecture, which plane contains the physical forwarding devices (switches and routers)?",o:["Data Plane", "Control Plane", "Application Plane", "Management Plane"],a:0},
+  {q:"Which protocol is commonly used to facilitate communication between the SDN controller and the forwarding devices?",o:["OpenFlow", "BGP", "TCP/IP", "HTTP"],a:0},
+  {q:"Which of the following software platforms is commonly required to perform executions on semi-structured data such as JSON or NoSQL?",o:["Oracle RDBMS", "Microsoft Excel", "Apache Hadoop", "PowerPoint"],a:2},
+  {q:"In Industry 4.0, why is Big Data analytics essential for handling the huge amount of data generated by IoT devices and sensors?",o:["To eliminate the use of IoT devices in operation", "To store data only in traditional relational databases", "To extract actionable insights for predictive maintenance, process optimization, and quality control", "To eliminate the need for cloud and fog computing in smart factories"],a:2}
+],
+10:[
+  {q:"State true or false. The main role of μSDN in the SD-6TiSCH protocol stack is to minimize control overhead.",o:["True", "False"],a:0},
+  {q:"In SD-IIoT (Software Defined Industrial IoT) Architecture, network monitoring is performed by which of the following component?",o:["Application", "Data Plane", "Control Plane", "All of these"],a:2},
+  {q:"What are the basic goals of information security?",o:["Facilitate Availability, Integrity, and Confidentiality", "Increase production cost, and promote manual operations only", "Decrease scalability, interoperability, and real-time performance", "Increase latency, and minimize throughput"],a:0},
+  {q:"Which of the following represents the \"Resilience\" aspect of a Trustworthy IIoT system?",o:["Safe operations of devices and people without risks and injury", "Protecting the system from unauthorized access, modification, and destruction", "Ability of the system to function correctly under dynamic adversarial conditions", "Restriction on data access – who can access and by whom it can be disclosed"],a:2},
+  {q:"Which of the following is NOT a security requirement for Cloud Complied IIoT?",o:["OT infrastructure is controlled and managed at external networked cloud", "Data from thousands of devices stored in the cloud", "Third-party services with trust-boundaries for security and privacy", "Completely eliminating the need to safeguard control systems from incoming cloud information flow"],a:3},
+  {q:"Which of the following statements is incorrect about the protection of fog devices in IIoT?",o:["Fog devices require the same security measures as end devices.", "Standard cryptographic protocols are used for authentication between fog devices and the cloud.", "Lightweight cryptography is recommended for authenticating end devices.", "Fog devices serve only as storage units without computing capability."],a:3},
+  {q:"Which of the following standards is specifically associated with industrial automation and control systems security (OT security)?",o:["ISO/IEC 15408", "NIST SP 800-144", "IEC 62443", "ISO 27017"],a:2},
+  {q:"Which of the following is incorrect about the security requirements in Healthcare IoT?",o:["Device data protection can involve passwords, signatures, and digital certificates.", "Communication data is secured using techniques like ciphering and hashing.", "Data stored in the cloud may be protected with access control lists, signatures, and digital certificates.", "Security management in Healthcare IoT completely avoids cloud involvement to minimize risks."],a:3},
+  {q:"Which company launched Construction Internet of Things to monitor large sites?",o:["Kuka", "DeWalt", "Maersk", "ABB"],a:1},
+  {q:"Which of the following is NOT a feature of a Smart Factory?",o:["Continuous real-time data", "Maximize manual intervention", "Prediction of future outcomes for taking preventive actions", "Flexibility and adaptability"],a:1},
+  {q:"Fill in the blanks. The YuMi initiative by ABB focuses on ____________",o:["Smart packaging with only Bluetooth-enabled systems", "Human–robot collaboration", "Maximize human involvement", "Robotic shelves for warehouses"],a:1},
+  {q:"What is the primary purpose of the SmartLabel initiative by the Grocery Manufacturers Association (GMA)?",o:["To provide consumers with detailed product information such as ingredients and nutrition through QR codes", "To control temperature settings of smart refrigerators remotely", "To enable drone delivery of grocery items", "To print manufacturing dates on food packaging"],a:0},
+  {q:"What is the impact of IoT in food industry?",o:["Increased wastage of food", "Longer production cycles", "Transparency of the supply chain", "Complete elimination of temperature monitoring"],a:2},
+  {q:"Fill in the blanks. The BioRanger device developed by Diagenetix is primarily used for ___________",o:["Monitoring livestock health", "Detecting microbial diseases in food", "Monitoring soil moisture", "Infusing flavors into beverages"],a:1},
+  {q:"State true or false. SCADA is a system of hardware and software components, which enable remote control, monitoring, and maintenance of local and remote industrial processes in real-time.",o:["True", "False"],a:0}
+],
+11:[
+  {q:"What is the utility of Dexcom?",o:["To monitor oxygen saturation in patients", "To measure and track blood pressure remotely", "To monitor glucose levels continuously and notify abnormalities", "To detect asthma symptoms using inhalers"],a:2},
+  {q:"Which of the following represents an IoT-based blood pressure monitoring system?",o:["iHealth BP5", "Manual mercury sphygmomanometer", "Analog wrist blood pressure cuff", "Traditional glass thermometer"],a:0},
+  {q:"Which of the following is a key security requirement in IIoT healthcare?",o:["Confidentiality, Integrity, Authentication, Availability", "Scalability, Flexibility, Latency, Mobility", "Cloud storage, Big Data, Sensors, Networks", "None of these"],a:0},
+  {q:"What is a major benefit of a digital power plant using IIoT?",o:["More human supervision", "Higher energy cost", "Turbine’s performance improvement and remote monitoring", "Manual performance tracking"],a:2},
+  {q:"Which network is primarily used for in-home IoT devices in a smart grid?",o:["Wide Area Network (WAN)", "Home Area Network (HAN)", "Field Area Network (FAN)", "Neighborhood Area Network (NAN)"],a:1},
+  {q:"Which component of the Advanced Metering Infrastructure (AMI) is responsible for analyzing the collected data?",o:["Smart meters", "Meter data management system", "Programmable logic controllers", "Remote terminal units"],a:1},
+  {q:"What type of RFID tag has an onboard battery but no active transmitter?",o:["Passive", "Active", "Semi-passive", "Beacon-based"],a:2},
+  {q:"Which of the following is not a key requirement for effective inventory management?",o:["Meet anticipated demand", "Hedge against price increases", "Increase inventory management cost", "Smoothen the flow of operations"],a:2},
+  {q:"Which of the following is a major limitation of barcodes compared to RFID tags?",o:["Vulnerable to forgery", "Require line of sight", "Only one can be read at a time", "All of these"],a:3},
+  {q:"Which of the following does NOT represent a type of network security?",o:["Detection of abnormal behavior by the network", "Prevention of unauthorized sharing of sensitive data", "Protection against phishing attack", "Predictive maintenance of HVAC systems"],a:3},
+  {q:"What does “Integrity” in software security ensure?",o:["Assurance of data accuracy and consistency throughout its lifecycle", "Verification of user credentials before granting access", "Extent to which software remains available during component failures", "Prevention of phishing attacks via email"],a:0},
+  {q:"Which of the following is not a major risk associated with AR/VR in industrial applications?",o:["Privacy and security issues", "Compromised content on the screen by hackers", "Intellectual property concerns", "Reduced risk of accidents and improved worker safety"],a:3},
+  {q:"Which of the following does not represent a typical application of analytics in facility management?",o:["Managing energy consumption", "Determining exact square-foot utilization of office space", "Enhancing real-time gameplay in virtual environments", "Operational cost-optimization"],a:2},
+  {q:"Which is a key benefit of IoT-based facility management?",o:["Increase unauthorized access", "Real-time tracking and better customer experience", "Increase all maintenance costs", "Make manual monitoring mandatory"],a:1},
+  {q:"Fill in the blanks._____________________ is one of the examples of the IoT-based body temperature monitoring device that takes into account the age, temperature, and symptoms of the patient to provide suggestions for the appropriate medicines or alert doctors.",o:["Kinsa", "Dexcom", "iHealth", "QardioCore"],a:0}
+],
+12:[
+  {q:"Which of the following is not a benefit of using IoT in the oil and gas industry?",o:["Increase production efficiency", "Save cost and time", "Improve asset maintenance", "Guarantee unlimited oil reserves"],a:3},
+  {q:"Which of the following is not a direct benefit of predictive maintenance using IoT in chemical industries?",o:["Increase in energy prices", "Reduced equipment breakdown", "Improve quality by efficient IoT analytics programs", "Efficient and effective maintenance"],a:0},
+  {q:"Which of the following is not a feature of IoT-enabled logistics improvement in the chemical industry?",o:["Ensuring product location using sensors or RFID tags", "Tracking assets to prevent loss", "Detecting contamination or possible attacks", "Random manual checks without sensor support"],a:3},
+  {q:"Which of the following best describes condition-based monitoring in IoTbased chemical industries?",o:["Predicting quality by continuous monitoring and analyzing factors such as water, nutrients, and pesticides.", "Running manual quality inspections once a year.", "Ignoring environmental factors like weather and focusing only on sales data.", "Setting random pricing models without data-driven insights."],a:0},
+  {q:"Which of the following is a way IoT helps minimize supply chain risks in the chemical industry?",o:["Conducting only annual manual audits of warehouses", "Real-time monitoring of equipment, materials, processes, environment, and workers", "Ignoring process data and focusing only on final product delivery", "Depending solely on human inspections without sensors"],a:1},
+  {q:"What function does the IoT play in the pharmaceutical industry related to drug safety?",o:["Automated surgery", "Developing vaccines", "Detecting adverse drug reactions and allergens", "Building hospital infrastructure"],a:2},
+  {q:"Which of the following represents the key features of sixth-generation drone technology?",o:["Platform and payload adaptability, automated safety modes, intelligent piloting models and full autonomy, airspace awareness", "Manual flight control with static camera mount and basic video recording", "Single-axis gimbal with limited flight time and analog signal transmission", "Pre-programmed routes with no adaptability and no safety protocols"],a:0},
+  {q:"State true or false - UAV-based light displays are generally more expensive than traditional firework displays and cannot be reused.",o:["True", "False"],a:1},
+  {q:"How are UAVs primarily used in precision forestry applications?",o:["To increase lumber pricing", "To measure canopy height, density and volume estimation", "To stop monitoring wild life", "To increase cost of forest maintanace"],a:1},
+  {q:"State true or false. One of the applications of UAVs in telecommunication is to perform tower inspection.",o:["True", "False"],a:0},
+  {q:"Which of the following is an application of UAVs in delivery and healthcare?",o:["Transporting blood samples to laboratories", "Conducting remote surgeries inside hospitals", "Manufacturing medical syringes", "Hiring doctors for clinics"],a:0},
+  {q:"Which of the following activities can be performed by using UAVs in the mining?",o:["Regular surface survey for optimized blast design", "Manage stockpiles", "Site exploration", "All of these"],a:3},
+  {q:"Which of the following is not a reason why case studies are necessary?",o:["Provide in-depth knowledge and clarity", "Explore real-life phenomena", "Enable detailed quantitative and qualitative analysis", "Guarantee faster industrial automation by themselves"],a:3},
+  {q:"Which of the following is not typically part of a case study subject matter?",o:["A small geographical area", "A limited number of individuals", "National-level government policies", "Real-life related events"],a:2},
+  {q:"State true or false. Almost all mining industries rely on conveyer-belt based systems for loading/unloading of mined materials.",o:["True", "False"],a:0}
 ]
 };
 
@@ -820,6 +1161,7 @@ let idx = 0;
 let score = 0;
 let weekScores = {};
 let selectedWeeks = [];
+let selectedSession = 'current';
 let shuffleOn = true;
 let shuffleOptsOn = true;
 let incorrectQuestions = [];
@@ -830,7 +1172,26 @@ let incorrectQuestions = [];
 const weeksGrid = document.getElementById('weeksGrid');
 const selAll    = document.getElementById('selAll');
 
-for(let w=1;w<=12;w++){
+const allWeeks = Object.keys(DATA).map(Number).sort((a,b)=>a-b);
+
+function updateSetupSub(){
+  const session = document.querySelector('input[name=session]:checked').value;
+  const sources = session === 'current' ? [DATA]
+                : session === 'previous' ? [DATA_PY]
+                : [DATA, DATA_PY];
+  const totalQ = allWeeks.reduce((s,w) => {
+    return s + sources.reduce((ss, d) => ss + (d[w] ? d[w].length : 0), 0);
+  }, 0);
+  const sessionLabel = session === 'current' ? '2026 Jan–Apr'
+                     : session === 'previous' ? '2025 Jul–Oct'
+                     : '2026 Jan–Apr + 2025 Jul–Oct';
+  const dot = '<span></span>';
+  document.getElementById('setupSub').innerHTML =
+    `${allWeeks.length} Weeks${dot}${totalQ} Questions${dot}${sessionLabel}`;
+}
+
+// Build week checkboxes
+for(const w of allWeeks){
   const label = document.createElement('label');
   label.className = 'week-item';
   label.innerHTML = `<input type="checkbox" value="${w}" checked><span>Week ${w}</span>`;
@@ -850,11 +1211,17 @@ weeksGrid.addEventListener('change', ()=>{
   selAll.checked = checked.length === all.length;
 });
 
+document.getElementById('sessionCtrl').addEventListener('change', ()=>{
+  selectedSession = document.querySelector('input[name=session]:checked').value;
+  updateSetupSub();
+});
+
 document.getElementById('shuffleTog').addEventListener('change', e => { shuffleOn = e.target.checked; });
 document.getElementById('shuffleOptsTog').addEventListener('change', e => { shuffleOptsOn = e.target.checked; });
 
 document.getElementById('startBtn').addEventListener('click', ()=>{
   selectedWeeks = weekBoxes().filter(c=>c.checked).map(c=>+c.value);
+  selectedSession = document.querySelector('input[name=session]:checked').value;
   if(!selectedWeeks.length){
     document.getElementById('noWeekMsg').classList.remove('hidden');
     return;
@@ -863,13 +1230,21 @@ document.getElementById('startBtn').addEventListener('click', ()=>{
   startQuiz();
 });
 
+updateSetupSub();
+
 // ═══════════════════════════════════════════════
 //  QUIZ LOGIC
 // ═══════════════════════════════════════════════
 function buildQueue(){
   queue = [];
+  const sources = selectedSession === 'current'  ? [{data: DATA,    year: 2026}]
+                : selectedSession === 'previous' ? [{data: DATA_PY, year: 2025}]
+                : [{data: DATA, year: 2026}, {data: DATA_PY, year: 2025}];
+
   selectedWeeks.forEach(w => {
-    DATA[w].forEach((qObj,i) => queue.push({...qObj, week:w, qNum:i+1}));
+    sources.forEach(({data, year}) => {
+      if(data[w]) data[w].forEach((qObj, i) => queue.push({...qObj, week: w, year, qNum: i+1}));
+    });
   });
   if(shuffleOn) shuffle(queue);
 }
@@ -887,7 +1262,12 @@ function startQuiz(){
   score = 0;
   weekScores = {};
   incorrectQuestions = [];
-  selectedWeeks.forEach(w => weekScores[w]={correct:0,total:0});
+  const sources = selectedSession === 'current'  ? [2026]
+                : selectedSession === 'previous' ? [2025]
+                : [2026, 2025];
+  selectedWeeks.forEach(w => {
+    sources.forEach(yr => { weekScores[yr + '_' + w] = {correct:0, total:0, week:w, year:yr}; });
+  });
   show('quiz');
   renderQuestion();
 }
@@ -896,11 +1276,13 @@ function renderQuestion(){
   const q = queue[idx];
 
   // progress
-  const pct = (idx / queue.length) * 100;
-  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progFill').style.width = (idx / queue.length * 100) + '%';
 
   // meta
-  document.getElementById('weekBadge').textContent = `Week ${q.week}`;
+  const badge = document.getElementById('weekBadge');
+  const showYear = selectedSession === 'both';
+  badge.textContent = showYear ? `Week ${q.week} · ${q.year}` : `Week ${q.week}`;
+  badge.className = 'badge week-badge' + (q.year === 2025 ? ' prev-year' : '');
   document.getElementById('qCounter').textContent = `Question ${idx+1} of ${queue.length}`;
   document.getElementById('scoreBadge').textContent = `${score} / ${idx}`;
 
@@ -912,8 +1294,9 @@ function renderQuestion(){
   optsEl.innerHTML = '';
   const letters = ['A','B','C','D'];
   const hasBothRef = q.o.some(opt => /\bboth\s*\(?a\)?\s*and\s*\(?b\)?/i.test(opt));
+  const isTrueFalse = q.o.length <= 2;
   let optOrder = q.o.map((text, i) => ({text, origIdx: i}));
-  if(shuffleOptsOn && !hasBothRef) shuffle(optOrder);
+  if(shuffleOptsOn && !hasBothRef && !isTrueFalse) shuffle(optOrder);
   const remappedCorrect = optOrder.findIndex(o => o.origIdx === q.a);
   const qWithRemapped = {...q, a: remappedCorrect};
   optOrder.forEach((opt, i) => {
@@ -936,12 +1319,14 @@ function handleAnswer(chosen, q, originalQ){
   buttons.forEach(b => b.disabled = true);
 
   const correct = q.a;
-  weekScores[q.week].total++;
+  const scoreKey = q.year + '_' + q.week;
+  if(!weekScores[scoreKey]) weekScores[scoreKey] = {correct:0, total:0, week:q.week, year:q.year};
+  weekScores[scoreKey].total++;
 
   if(chosen === correct){
     buttons[chosen].classList.add('correct');
     score++;
-    weekScores[q.week].correct++;
+    weekScores[scoreKey].correct++;
     showFeedback(true, null);
   } else {
     buttons[chosen].classList.add('wrong');
@@ -955,8 +1340,7 @@ function handleAnswer(chosen, q, originalQ){
 
   document.getElementById('scoreBadge').textContent = `${score} / ${idx+1}`;
   document.getElementById('nextRow').classList.remove('hidden');
-  const pct = ((idx+1) / queue.length) * 100;
-  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progFill').style.width = ((idx+1) / queue.length * 100) + '%';
 }
 
 function showFeedback(ok, correctHtml){
@@ -987,8 +1371,7 @@ function showResults(){
   document.getElementById('ringNum').textContent = score;
   document.getElementById('ringLabel').textContent = `out of ${total}`;
 
-  // Animate ring
-  const circumference = 2 * Math.PI * 52; // r=52 → ~326.7
+  const circumference = 2 * Math.PI * 52;
   const offset = circumference - (pct / 100) * circumference;
   setTimeout(()=>{
     document.getElementById('ringCircle').style.strokeDashoffset = offset;
@@ -1014,17 +1397,24 @@ function showResults(){
 
   // breakdown by week
   const bk = document.getElementById('breakdown');
-  const weeksUsed = selectedWeeks.filter(w => weekScores[w] && weekScores[w].total > 0);
-  if(weeksUsed.length > 1){
+  const usedKeys = Object.keys(weekScores).filter(k => weekScores[k].total > 0);
+  if(usedKeys.length > 1){
     bk.innerHTML = `<div class="breakdown-title">Score by Week</div><div class="bk-rows" id="bkRows"></div>`;
     const rows = document.getElementById('bkRows');
-    weeksUsed.forEach(w => {
-      const {correct, total} = weekScores[w];
+    const showYear = selectedSession === 'both';
+    usedKeys.sort((a,b)=>{
+      const [ya,wa] = a.split('_').map(Number);
+      const [yb,wb] = b.split('_').map(Number);
+      return ya !== yb ? ya - yb : wa - wb;
+    }).forEach(k => {
+      const {correct, total, week, year} = weekScores[k];
       const p = total ? Math.round((correct/total)*100) : 0;
+      const label = showYear ? `W${week} · ${year}` : `Week ${week}`;
+      const isPrev = year === 2025;
       rows.innerHTML += `
         <div class="bk-row">
-          <span class="bk-week">Week ${w}</span>
-          <div class="bk-bar-wrap"><div class="bk-bar" style="width:${p}%"></div></div>
+          <span class="bk-week">${label}</span>
+          <div class="bk-bar-wrap"><div class="bk-bar${isPrev?' prev':''}" style="width:${p}%"></div></div>
           <span class="bk-score">${correct}/${total}</span>
         </div>`;
     });
@@ -1043,7 +1433,10 @@ document.getElementById('practiceWrongBtn').addEventListener('click', ()=>{
   score = 0;
   incorrectQuestions = [];
   weekScores = {};
-  wrong.forEach(q => { if(!weekScores[q.week]) weekScores[q.week]={correct:0,total:0}; });
+  wrong.forEach(q => {
+    const k = q.year + '_' + q.week;
+    if(!weekScores[k]) weekScores[k] = {correct:0, total:0, week:q.week, year:q.year};
+  });
   show('quiz');
   renderQuestion();
 });
